@@ -1,0 +1,218 @@
+<title>Jacob Kondjo · AI Engineer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+__CSS__
+/* Barre du haut, langue, blog */
+.bar{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:16px;height:56px;padding-top:env(safe-area-inset-top,0px)}
+.mark{font-family:var(--display);font-weight:500;font-size:24px;letter-spacing:-.02em}
+.mark::after{content:".";color:var(--accent)}
+.bar nav{display:flex;align-items:center;gap:18px}
+.bar nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-2);transition:color .3s}
+.bar nav a:hover,.bar nav a[aria-current="page"]{color:var(--accent)}
+.bar nav .hide-s{display:none}
+.lang{display:inline-flex;border:1px solid var(--rule)}
+.lang button{all:unset;cursor:pointer;min-width:38px;min-height:34px;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-3);transition:color .3s,background-color .3s}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.lang button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hero .in{padding-top:12px}
+
+.view[hidden]{display:none!important}
+.blog-head{padding-block:40px 28px}
+.blog-head h1{font-family:var(--display);font-weight:500;font-size:clamp(44px,9vw,92px);line-height:.95;letter-spacing:-.015em;margin:0 0 16px}
+.blog-head h1 i{color:var(--accent);font-weight:400}
+.notes{border-top:1px solid var(--ink);margin-bottom:64px}
+.note{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.note .t{font-family:var(--display);font-weight:500;font-size:28px;line-height:1.1;transition:color .3s}
+.note:hover .t{color:var(--accent)}
+.note p{margin:0;color:var(--ink-2);font-size:15.5px}
+.note .meta{display:flex;gap:14px;flex-wrap:wrap}
+.art{max-width:720px;padding-block:28px 72px}
+.art .back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:18px}
+.art h1{font-family:var(--display);font-weight:500;font-size:clamp(38px,7vw,64px);line-height:1;letter-spacing:-.015em;margin:8px 0 18px;text-wrap:balance}
+.art .meta{display:flex;gap:14px;flex-wrap:wrap;padding-bottom:22px;margin-bottom:28px;border-bottom:1px solid var(--rule)}
+.art p{font-size:17.5px;line-height:1.8;margin:0 0 1.2em}
+.art p.lede{font-family:var(--display);font-size:25px;line-height:1.4;color:var(--ink)}
+.art p.pull{font-family:var(--display);font-style:italic;font-size:26px;line-height:1.35;color:var(--accent);border-left:2px solid var(--accent);padding-left:18px;margin:1.6em 0}
+.art .next{display:flex;flex-direction:column;gap:6px;margin-top:40px;padding-top:22px;border-top:1px solid var(--rule)}
+.art .next a{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15}
+.art .next a:hover{color:var(--accent)}
+.draft{color:var(--accent)}
+.note.soon .t{color:var(--ink-3)}
+.note.soon:hover .t{color:var(--ink-3)}
+.tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tags-row em{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--rule);padding:3px 7px}
+.tags-row em.pj{border-color:transparent;color:var(--accent);padding-left:0}
+.filters{display:flex;flex-direction:column;gap:14px;margin-bottom:18px;position:sticky;top:0;z-index:4;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--rule)}
+.seg{display:inline-flex;align-self:flex-start;border:1px solid var(--ink)}
+.seg button{all:unset;cursor:pointer;min-height:40px;padding:0 16px;display:inline-flex;align-items:center;font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:background-color .3s,color .3s}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.fchips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--gut-r)) 0 calc(-1 * var(--gut));padding:0 var(--gut-r) 2px var(--gut)}
+.fchips::-webkit-scrollbar{display:none}
+.fchip{all:unset;box-sizing:border-box;flex:none;cursor:pointer;min-height:40px;padding:0 14px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);font-family:var(--display);font-weight:500;font-size:18px;transition:border-color .3s,color .3s,background-color .3s}
+.fchip span{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.fchip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--tint)}
+.fchip:focus-visible,.seg button:focus-visible,.sortb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sortrow{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sorts{display:flex;align-items:center;gap:4px}
+.sortb{all:unset;cursor:pointer;min-height:36px;padding:0 10px;display:inline-flex;align-items:center;color:var(--ink-3);border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+.sortb[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+.series{border:1px solid var(--rule);padding:16px 18px;margin:0 0 28px}
+.series ol{list-style:none;margin:10px 0 0;padding:0}
+.series li{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:8px 0;border-top:1px dashed var(--rule)}
+.series li b,.series li a{font-family:var(--display);font-weight:500;font-size:19px;line-height:1.2}
+.series li.here b{color:var(--accent)}
+.series li a:hover{color:var(--accent)}
+@media (min-width:760px){
+  .bar nav .hide-s{display:inline-flex}
+  .bar{height:68px}
+  .note{grid-template-columns:minmax(0,1fr) 200px;gap:24px;align-items:baseline}
+  .note .meta{justify-content:flex-end}
+  .note .t{font-size:32px}
+  .filters{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .fchips{flex-wrap:wrap;overflow:visible;margin:0;padding:0;flex:1 1 100%;order:3}
+  .sortrow{order:2}
+}
+</style>
+
+<header class="in bar">
+  <a class="mark" href="#top" aria-label="Jacob Kondjo">JK</a>
+  <nav class="mono" aria-label="Navigation">
+    <a class="hide-s" href="#work" data-t="nav_work"></a>
+    <a href="#blog" id="nav-blog" data-t="nav_writing"></a>
+    <a class="hide-s" href="#contact" data-t="nav_contact"></a>
+    <span class="lang" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="fr">FR</button></span>
+  </nav>
+</header>
+
+<main class="view" id="v-home">
+  <section class="hero" id="top" aria-label="Jacob Kondjo">
+    <div class="space-wrap"><div class="space" id="space"><canvas id="field" aria-hidden="true"></canvas></div></div>
+    <div class="in">
+      <div class="id-row">
+        <h1><span>Jacob</span><span>Kondjo</span></h1>
+        <div class="creds" aria-label="Certifications">
+          <a class="cred" href="#proof"><img src="__GCLOUD__" alt="Google Cloud Professional ML Engineer" width="110" height="17"></a>
+          <a class="cred" href="#proof"><img src="__STANFORD__" alt="Stanford Statistical Learning" width="81" height="17"></a>
+          <a class="cred" href="#proof"><img src="__STATIONF__" alt="Station F" width="95" height="17"></a>
+        </div>
+      </div>
+      <p class="title">AI Engineer <span>Paris, France</span></p>
+      <p class="say" data-t="hero_say"></p>
+      <div class="ctas"><a class="btn solid" href="#network" data-t="cta_work"></a><a class="btn" href="#contact" data-t="cta_contact"></a></div>
+      <p class="legend" data-t="legend"></p>
+    </div>
+  </section>
+
+  <section class="s" id="network">
+    <div class="in">
+      <p class="mono lab kick" data-t="net_kick"></p>
+      <h2 data-t="net_h2"></h2>
+      <p class="lead" data-t="net_lead"></p>
+      <div class="inst">
+        <div class="mnet" id="mnet">
+          <svg class="mlines" id="mlines" aria-hidden="true"></svg>
+          <p class="mono mut mlab" data-t="l1"></p><div class="mrow" id="mr-d"></div>
+          <p class="mono mut mlab" data-t="l2"></p><div class="mrow" id="mr-s"></div>
+          <p class="mono mut mlab" data-t="l3"></p><div class="mrow" id="mr-p"></div>
+          <p class="mono mut mhint" data-t="hint"></p>
+        </div>
+        <aside class="panel" aria-live="polite">
+          <div class="p-h mono"><span class="lab" id="mode"></span><span class="mut" id="kind"></span></div>
+          <div><p class="p-t" id="p-t"></p><p class="p-w mono mut" id="p-w"></p></div>
+          <p class="p-q" id="p-q"></p>
+          <div class="p-tech" id="p-tech"></div>
+          <div class="dims" id="dims"></div>
+          <div class="nn-h mono"><span class="mut" data-t="nn_h"></span><span class="mut" data-t="cos"></span></div>
+          <ol class="nn" id="nn"></ol>
+          <div class="p-foot"><span class="p-m" id="p-m"></span><a class="mono ul p-l" id="p-l" href="#work"></a></div>
+        </aside>
+        <div class="graph-box">
+          <svg id="graph" role="img" aria-label="Domains, technologies, work"></svg>
+          <div class="graph-cap mono mut"><span data-t="cap_d"></span><span data-t="cap_s"></span><span data-t="cap_p"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="work">
+    <div class="in">
+      <p class="mono lab kick" data-t="work_kick"></p>
+      <h2 data-t="work_h2"></h2>
+      <p class="lead" data-t="work_lead"></p>
+      <div class="works" id="works"></div>
+      <div class="swipe"><span class="mono mut" data-t="swipe"></span><span class="dots" id="dots"></span></div>
+      <div class="also">
+        <a href="https://github.com/yvankondjo/Ragbench">RAGBench-12x<span data-t="oss"></span></a>
+        <a href="https://github.com/yvankondjo/VertexOps-Pipeline">VertexOps Pipeline<span data-t="oss"></span></a>
+        <a href="https://github.com/yvankondjo/GPT2"><span data-t="gpt2_name"></span><span data-t="oss"></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="proof">
+    <div class="in">
+      <p class="mono lab kick" data-t="proof_kick"></p>
+      <h2 data-t="proof_h2"></h2>
+      <div class="proofs">
+        <div class="proof"><div class="plate"><img src="__GCLOUD__" alt="Google Cloud" width="190" height="30"></div><div><b>Professional Machine Learning Engineer</b><span>Google Cloud</span></div></div>
+        <div class="proof"><div class="plate"><img src="__STANFORD__" alt="Stanford" width="143" height="30"></div><div><b>Statistical Learning</b><span>Stanford Online</span></div></div>
+        <div class="proof"><div class="plate"><img src="__STATIONF__" alt="Station F" width="168" height="30"></div><div><b data-t="proof3_t"></b><span data-t="proof3_s"></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="writing">
+    <div class="in">
+      <p class="mono lab kick" data-t="writ_kick"></p>
+      <h2 data-t="writ_h2"></h2>
+      <p class="lead" data-t="writ_h2b"></p>
+      <div id="home-notes"></div>
+      <p style="margin:18px 0 0"><a class="mono ul p-l" href="#blog"><span data-t="writ_all"></span>&nbsp;<span id="all-count"></span></a></p>
+    </div>
+  </section>
+
+  <section class="end" id="contact">
+    <div class="in">
+      <p class="mono lab kick" data-t="contact_kick"></p>
+      <h2 data-t="contact_h2"></h2>
+      <span class="mail" id="mail">yvankondjo8@gmail.com</span>
+      <div class="row mono"><span class="mut" id="mail-note" data-t="tap_copy"></span><a class="ul" href="https://linkedin.com/in/jacob-kondjo">LinkedIn ↗</a><a class="ul" href="https://github.com/yvankondjo">GitHub ↗</a></div>
+    </div>
+  </section>
+</main>
+
+<main class="view" id="v-blog" hidden>
+  <div class="in blog-head">
+    <p class="mono lab kick" data-t="writ_kick"></p>
+    <h1 data-t="blog_h1"></h1>
+    <p class="lead" data-t="blog_lead"></p>
+  </div>
+  <div class="in">
+    <div class="filters">
+      <div class="seg mono" role="group" aria-label="Group"><button type="button" data-by="theme"></button><button type="button" data-by="project"></button></div>
+      <div class="fchips" id="fchips" role="group" aria-label="Filter"></div>
+      <div class="sortrow mono"><span class="mut" id="ncount"></span><span class="sorts"><span class="mut" id="sort-l"></span><button type="button" class="sortb" data-sort="feat"></button><button type="button" class="sortb" data-sort="short"></button></span></div>
+    </div>
+    <div class="notes" id="blog-notes"></div>
+  </div>
+</main>
+
+<main class="view" id="v-post" hidden>
+  <article class="in art" id="post"></article>
+</main>
+
+<footer><div class="in mono mut"><span>© 2026 · Jacob Kondjo · Paris <span id="clock">--:--</span></span>__PALETTE__</div></footer>
+
+<nav class="dock" aria-label="Sections">
+  <a href="#network" data-s="network" data-t="dock_network"></a>
+  <a href="#work" data-s="work" data-t="dock_work"></a>
+  <a href="#blog" data-s="blog" data-t="dock_writing"></a>
+  <a href="#contact" data-s="contact" data-t="dock_contact"></a>
+</nav>
+
+<script>
+__JS__
+</script>

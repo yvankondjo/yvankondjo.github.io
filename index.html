@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en" data-palette="indigo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Jacob Kondjo, AI Engineer in Paris. Agents, search and deep learning shipped to production on Google Cloud. Google Cloud Professional ML Engineer.">
+<meta name="theme-color" content="#4f2a8c">
+<link rel="canonical" href="https://yvankondjo.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f2a8c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' fill='white' text-anchor='middle'%3EJK%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jacob Kondjo · AI Engineer">
+<meta property="og:description" content="Jacob Kondjo, AI Engineer in Paris. Agents, search and deep learning shipped to production on Google Cloud. Google Cloud Professional ML Engineer.">
+<meta property="og:url" content="https://yvankondjo.github.io/">
+<meta name="twitter:card" content="summary">
+<title>Jacob Kondjo · AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+
+/* Mobile first : les styles de base visent un téléphone tenu d'une main (pouce en bas, cibles de 44 px, une colonne, glisser à l'horizontale pour les travaux).
+   Les écrans plus grands ajoutent des colonnes à partir de 760 px. Ouverture : espace latent vivant. Puis le réseau et son panneau de cosinus. */
+:root{
+  --paper:#ffffff; --ink:#111111; --ink-2:#55555a; --ink-3:#9a9aa0; --rule:#ebebeb; --tint:#f4f1f8; --accent:#4f2a8c; --on-accent:#ffffff; --plate:#ffffff;
+  --display:"Cormorant Garamond",Garamond,"Times New Roman",serif;
+  --text:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --ease:cubic-bezier(.2,.7,.1,1);
+  --gut:max(20px,env(safe-area-inset-left,0px));
+  --gut-r:max(20px,env(safe-area-inset-right,0px));
+  --dock:calc(60px + env(safe-area-inset-bottom,0px));
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0c0c0c; --ink:#f2f2f0; --ink-2:#a5a5a0; --ink-3:#6a6a66; --rule:#242424; --tint:#1a1528; --accent:#b9a0f2; --on-accent:#0c0c0c; --plate:#f4f4f2; color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0c0c0c; --ink:#f2f2f0; --ink-2:#a5a5a0; --ink-3:#6a6a66; --rule:#242424; --tint:#1a1528; --accent:#b9a0f2; --on-accent:#0c0c0c; --plate:#f4f4f2; color-scheme:dark}
+
+/* ---------- Base : téléphone ---------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:12px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;padding-bottom:var(--dock)}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:var(--on-accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.in{max-width:1120px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gut-r)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.lab{color:var(--accent)}
+.mut{color:var(--ink-3)}
+.ul{border-bottom:1px solid var(--rule);transition:border-color .4s,color .4s}
+.ul:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Ouverture */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+.hero .in{position:relative;pointer-events:none;padding-block:calc(18px + env(safe-area-inset-top,0px)) 40px;display:flex;flex-direction:column;gap:18px}
+.hero a,.hero .creds{pointer-events:auto}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(54px,16vw,148px);letter-spacing:-.02em;line-height:.86;margin:0}
+h1 span{display:block}
+.title{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;margin:0;font-weight:500;font-size:21px;letter-spacing:-.02em;line-height:1.2}
+.title::before{content:"";width:24px;height:2px;background:var(--accent);display:block}
+.title span{color:var(--ink-3);font-weight:400;font-size:.8em}
+.say{font-family:var(--display);font-weight:400;font-size:25px;line-height:1.22;margin:2px 0 0;max-width:20em;text-wrap:balance}
+.say i{color:var(--accent)}
+.id-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center}
+.creds{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.cred{flex:none;display:flex;align-items:center;justify-content:center;height:34px;width:100px;padding:0 10px;background:var(--plate);border:1px solid var(--rule);transition:border-color .4s}
+.cred:active,.cred:hover{border-color:var(--accent)}
+.cred img{display:block;height:11px;width:auto}
+.ctas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--ink);background:var(--paper);transition:background-color .3s,color .3s,border-color .3s,transform .15s}
+.btn:active{transform:scale(.98)}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.legend{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--ink-3);margin:2px 0 0;max-width:46em}
+.hero .in{z-index:1;width:100%}
+.space-wrap{position:absolute;inset:0}
+.space{position:absolute;inset:0;touch-action:pan-y;overflow:hidden}
+#field{position:absolute;inset:0;width:100%;height:100%;display:block}
+.space-ui,.space-nn,.space-note{display:none!important}
+.space-ui{position:absolute;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;pointer-events:none}
+.space-nn{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--rule)}
+.space-nn li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--rule);font-variant-numeric:tabular-nums}
+.space-nn li:last-child{border-bottom:0}
+.space-nn b{font-family:var(--display);font-weight:500;font-size:20px}
+.space-nn li:first-child b{color:var(--accent)}
+.space-note{font-size:13px;color:var(--ink-3);margin:10px 0 0;line-height:1.5}
+.p-tech{display:flex;flex-wrap:wrap;gap:6px}
+.p-tech span{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);border:1px solid var(--rule);padding:4px 8px}
+.p-tech span.k{border-color:transparent;color:var(--ink-3);padding-left:0}
+
+/* Sections */
+section.s{padding-block:56px;border-bottom:1px solid var(--rule)}
+.kick{margin:0 0 10px}
+h2{font-family:var(--display);font-weight:500;font-size:34px;line-height:1.06;letter-spacing:-.01em;margin:0 0 10px;text-wrap:balance}
+h2 i{color:var(--accent);font-weight:400}
+.lead{color:var(--ink-2);margin:0 0 26px;max-width:36em;font-size:15.5px}
+
+/* Réseau + panneau : le panneau d'abord sur téléphone, le réseau en dessous comme carte */
+.inst{display:flex;flex-direction:column;gap:18px}
+.mnet{order:1;position:relative}
+.mlines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+.mlines path{fill:none;stroke:var(--accent);stroke-width:1.3;stroke-dasharray:3 5;animation:run 1.4s linear infinite;opacity:.8}
+.mlab{margin:0 0 8px;position:relative;z-index:1}
+.mrow{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 34px;position:relative;z-index:1}
+.mrow:last-of-type{margin-bottom:12px}
+.mchip{all:unset;box-sizing:border-box;cursor:pointer;min-height:38px;padding:0 11px;display:inline-flex;align-items:center;border:1px solid var(--rule);background:var(--paper);font-family:var(--display);font-weight:500;font-size:18px;line-height:1;transition:border-color .3s,color .3s,background-color .3s,opacity .3s}
+.mchip.t{font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;min-height:34px;padding:0 9px}
+.mchip.on{border-color:var(--accent);color:var(--accent);background:var(--tint)}
+.mchip.me{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.mnet.sel .mchip:not(.on):not(.me){color:var(--ink-3)}
+.mchip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mhint{margin:0}
+.panel{order:2;border:1px solid var(--rule);padding:18px;display:flex;flex-direction:column;gap:14px}
+.panel .p-tech{display:none}
+.graph-box{display:none}
+.p-h{display:flex;justify-content:space-between;gap:10px}
+.p-t{font-family:var(--display);font-weight:500;font-size:30px;line-height:1.05;margin:0}
+.p-w{margin:6px 0 0}
+.p-q{font-family:var(--display);font-style:italic;font-size:19px;line-height:1.3;color:var(--ink-2);margin:0}
+.dims{display:grid;gap:9px;padding-top:12px;border-top:1px dashed var(--rule)}
+.dim{display:grid;grid-template-columns:96px minmax(0,1fr) 34px;gap:10px;align-items:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2)}
+.dim .tr{height:6px;background:var(--rule);position:relative;overflow:hidden}
+.dim .tr i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--ink);transition:width .5s var(--ease)}
+.dim.top{color:var(--accent)}
+.dim.top .tr i{background:var(--accent)}
+.dim .v{text-align:right;font-variant-numeric:tabular-nums}
+.nn-h{display:flex;justify-content:space-between;padding-top:12px;border-top:1px dashed var(--rule)}
+.nn{list-style:none;margin:-4px 0 0;padding:0}
+.nn li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:46px;border-bottom:1px dashed var(--rule);cursor:pointer;font-variant-numeric:tabular-nums}
+.nn li b{font-family:var(--display);font-weight:500;font-size:20px;transition:color .3s}
+.nn li:hover b,.nn li:active b{color:var(--accent)}
+.p-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:44px}
+.p-m b{font-family:var(--display);font-weight:500;font-size:32px;line-height:1;color:var(--accent);margin-right:8px}
+.p-m span{font-size:13px;color:var(--ink-2)}
+.p-l{display:inline-flex;align-items:center;min-height:44px;white-space:nowrap;flex:none}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--gut-r)) 0 calc(-1 * var(--gut));padding:2px var(--gut-r) 6px var(--gut);scroll-snap-type:x mandatory}
+.chips::-webkit-scrollbar{display:none}
+.chip{all:unset;box-sizing:border-box;flex:none;scroll-snap-align:start;min-height:40px;padding:0 14px;display:inline-flex;align-items:center;border:1px solid var(--rule);font-family:var(--display);font-weight:500;font-size:18px;cursor:pointer;transition:border-color .3s,color .3s,background-color .3s}
+.chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--tint)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#graph{display:block;width:100%;height:auto}
+#graph text{font-family:var(--text);fill:var(--ink-2);transition:fill .35s}
+#graph .big text{font-family:var(--display);font-weight:500;font-size:20px;fill:var(--ink)}
+#graph .small text{font-size:12px}
+#graph path{fill:none;stroke:var(--rule);stroke-width:1;transition:stroke .35s,opacity .35s}
+#graph circle.dot{fill:var(--paper);stroke:var(--ink);stroke-width:1;transition:fill .35s,stroke .35s}
+#graph circle.hit{fill:transparent;stroke:none}
+#graph g.node{cursor:pointer}
+#graph g.node:focus{outline:none}
+#graph.on path{opacity:.55}
+#graph path.lit{stroke:var(--accent);stroke-width:1.5;opacity:1;stroke-dasharray:3 6;animation:run 1.4s linear infinite}
+@keyframes run{to{stroke-dashoffset:-36}}
+#graph g.lit circle.dot{fill:var(--accent);stroke:var(--accent)}
+#graph g.lit text{fill:var(--accent)}
+.graph-cap{display:flex;justify-content:space-between;gap:12px;margin-top:6px}
+
+/* Travaux : on glisse au pouce */
+.works{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(-1 * var(--gut-r)) 0 calc(-1 * var(--gut));padding:0 var(--gut-r) 8px var(--gut);scroll-padding-left:var(--gut)}
+.works::-webkit-scrollbar{display:none}
+.work{flex:0 0 84%;scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;padding:22px;border:1px solid var(--rule);transition:border-color .4s}
+.work:hover,.work:active{border-color:var(--accent)}
+.work .top{display:flex;justify-content:space-between;gap:10px}
+.work h3{font-family:var(--display);font-weight:500;font-size:29px;line-height:1.05;margin:4px 0 0}
+.work p{margin:0;color:var(--ink-2);font-size:15px}
+.work .k{display:flex;align-items:baseline;gap:10px;margin-top:auto;padding-top:10px}
+.work .k b{font-family:var(--display);font-weight:500;font-size:38px;line-height:1;color:var(--accent)}
+.work .k span{font-size:13.5px;color:var(--ink-2)}
+.swipe{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.dots{display:flex;gap:6px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--rule);transition:background-color .3s,width .3s}
+.dots i.on{background:var(--accent);width:16px;border-radius:3px}
+.also{display:flex;flex-direction:column;margin-top:18px;border-top:1px solid var(--rule)}
+.also a{display:flex;justify-content:space-between;align-items:center;min-height:48px;border-bottom:1px solid var(--rule);font-family:var(--display);font-weight:500;font-size:20px}
+.also a span{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+
+/* Preuves : une ligne par preuve */
+.proofs{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.proof{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--rule)}
+.proof .plate{height:52px;display:flex;align-items:center;justify-content:center;background:var(--plate);border:1px solid var(--rule);padding:0 10px}
+.proof .plate img{max-height:18px;max-width:100%;display:block}
+.proof b{display:block;font-family:var(--display);font-weight:500;font-size:20px;line-height:1.15}
+.proof span{font-size:13px;color:var(--ink-2)}
+
+/* Écrits, contact */
+.post{display:flex;flex-direction:column;gap:2px;padding:14px 0;border-top:1px solid var(--rule)}
+.post:last-child{border-bottom:1px solid var(--rule)}
+.post b{font-family:var(--display);font-weight:500;font-size:22px;line-height:1.2;transition:color .3s}
+.post:hover b{color:var(--accent)}
+.end{padding-block:64px 40px}
+.mail{display:block;font-family:var(--display);font-weight:500;font-size:clamp(28px,8.4vw,64px);letter-spacing:-.01em;cursor:copy;user-select:all;overflow-wrap:anywhere;padding-bottom:6px;border-bottom:1px solid var(--rule);transition:color .3s,border-color .3s}
+.mail:hover{color:var(--accent);border-color:var(--accent)}
+.end .row{display:flex;gap:10px 22px;flex-wrap:wrap;margin-top:18px}
+.end .row a,.end .row span{min-height:44px;display:inline-flex;align-items:center}
+footer .in{display:flex;flex-direction:column;gap:14px;padding-block:22px 28px;border-top:1px solid var(--rule)}
+
+/* Barre du bas, à portée de pouce */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:15;display:grid;grid-template-columns:repeat(4,1fr);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--rule);padding:0 var(--gut-r) env(safe-area-inset-bottom,0px) var(--gut)}
+.dock a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;height:60px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);transition:color .3s}
+.dock a::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.4;transition:opacity .3s,transform .3s}
+.dock a[aria-current="true"]{color:var(--accent)}
+.dock a[aria-current="true"]::before{opacity:1;transform:scale(1.4)}
+
+/* ---------- Tablette et ordinateur ---------- */
+@media (min-width:760px){
+  body{font-size:16.5px;padding-bottom:0}
+  .dock{display:none}
+  .hero .in{padding-block:clamp(72px,13vh,128px) clamp(56px,11vh,104px);gap:24px}
+  .title{font-size:clamp(22px,2.6vw,30px)}
+  .say{font-size:clamp(26px,2.8vw,34px)}
+  .creds{gap:8px}
+  .cred{height:44px;width:160px;padding:0 14px}
+  .cred img{height:16px}
+  .space-wrap{position:absolute;inset:0;margin:0;padding:0}
+  .space{height:100%;border:0;touch-action:pan-y}
+  .space-ui,.space-nn,.space-note{display:none}
+  .hero .in{z-index:1}
+  .ctas{display:flex;gap:10px}
+  .btn{min-height:48px;padding:0 22px}
+  section.s{padding-block:clamp(72px,11vh,112px)}
+  h2{font-size:clamp(40px,4.8vw,58px);margin-bottom:14px}
+  .lead{font-size:16.5px;margin-bottom:40px}
+  .chips{display:none}
+  .works{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;overflow:visible;margin:0;padding:0}
+  .work{padding:26px}
+  .work h3{font-size:32px}
+  .swipe{display:none}
+  .also{flex-direction:row;flex-wrap:wrap;gap:10px 26px;border-top:0}
+  .also a{min-height:0;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  .also a span{display:none}
+  .proofs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;border-top:0}
+  .proof{display:flex;flex-direction:column;align-items:stretch;padding:0;border-bottom:0}
+  .proof .plate{height:92px;padding:0 20px}
+  .proof .plate img{max-height:30px}
+  .proof b{font-size:23px}
+  .post{flex-direction:row;justify-content:space-between;align-items:baseline}
+  .post b{font-size:25px}
+  .end{padding-block:clamp(80px,12vh,120px) 48px}
+  footer .in{flex-direction:row;justify-content:space-between;align-items:center}
+}
+@media (min-width:960px){
+  .inst{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:40px;align-items:start}
+  .panel{order:2;position:sticky;top:24px;padding:22px}
+  .panel .p-tech{display:flex}
+  .graph-box{order:1;display:block}
+  .mnet{display:none}
+  .p-t{font-size:32px}
+  .dim{grid-template-columns:132px minmax(0,1fr) 34px}
+}
+/* Violet (indigo), the only site colour */
+:root[data-palette="indigo"]{--accent:#4f2a8c;--tint:#f2eef8;--on-accent:#ffffff}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"])[data-palette="indigo"]{--accent:#b9a0f2;--tint:#1a1528;--on-accent:#0c0c0c}
+}
+:root[data-theme="dark"][data-palette="indigo"]{--accent:#b9a0f2;--tint:#1a1528;--on-accent:#0c0c0c}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* Barre du haut, langue, blog */
+.bar{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:16px;height:56px;padding-top:env(safe-area-inset-top,0px)}
+.mark{font-family:var(--display);font-weight:500;font-size:24px;letter-spacing:-.02em}
+.mark::after{content:".";color:var(--accent)}
+.bar nav{display:flex;align-items:center;gap:18px}
+.bar nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-2);transition:color .3s}
+.bar nav a:hover,.bar nav a[aria-current="page"]{color:var(--accent)}
+.bar nav .hide-s{display:none}
+.lang{display:inline-flex;border:1px solid var(--rule)}
+.lang button{all:unset;cursor:pointer;min-width:38px;min-height:34px;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-3);transition:color .3s,background-color .3s}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.lang button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hero .in{padding-top:12px}
+
+.view[hidden]{display:none!important}
+.blog-head{padding-block:40px 28px}
+.blog-head h1{font-family:var(--display);font-weight:500;font-size:clamp(44px,9vw,92px);line-height:.95;letter-spacing:-.015em;margin:0 0 16px}
+.blog-head h1 i{color:var(--accent);font-weight:400}
+.notes{border-top:1px solid var(--ink);margin-bottom:64px}
+.note{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.note .t{font-family:var(--display);font-weight:500;font-size:28px;line-height:1.1;transition:color .3s}
+.note:hover .t{color:var(--accent)}
+.note p{margin:0;color:var(--ink-2);font-size:15.5px}
+.note .meta{display:flex;gap:14px;flex-wrap:wrap}
+.art{max-width:720px;padding-block:28px 72px}
+.art .back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:18px}
+.art h1{font-family:var(--display);font-weight:500;font-size:clamp(38px,7vw,64px);line-height:1;letter-spacing:-.015em;margin:8px 0 18px;text-wrap:balance}
+.art .meta{display:flex;gap:14px;flex-wrap:wrap;padding-bottom:22px;margin-bottom:28px;border-bottom:1px solid var(--rule)}
+.art p{font-size:17.5px;line-height:1.8;margin:0 0 1.2em}
+.art p.lede{font-family:var(--display);font-size:25px;line-height:1.4;color:var(--ink)}
+.art p.pull{font-family:var(--display);font-style:italic;font-size:26px;line-height:1.35;color:var(--accent);border-left:2px solid var(--accent);padding-left:18px;margin:1.6em 0}
+.art .next{display:flex;flex-direction:column;gap:6px;margin-top:40px;padding-top:22px;border-top:1px solid var(--rule)}
+.art .next a{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15}
+.art .next a:hover{color:var(--accent)}
+.draft{color:var(--accent)}
+.note.soon .t{color:var(--ink-3)}
+.note.soon:hover .t{color:var(--ink-3)}
+.tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tags-row em{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--rule);padding:3px 7px}
+.tags-row em.pj{border-color:transparent;color:var(--accent);padding-left:0}
+.filters{display:flex;flex-direction:column;gap:14px;margin-bottom:18px;position:sticky;top:0;z-index:4;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--rule)}
+.seg{display:inline-flex;align-self:flex-start;border:1px solid var(--ink)}
+.seg button{all:unset;cursor:pointer;min-height:40px;padding:0 16px;display:inline-flex;align-items:center;font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:background-color .3s,color .3s}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.fchips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--gut-r)) 0 calc(-1 * var(--gut));padding:0 var(--gut-r) 2px var(--gut)}
+.fchips::-webkit-scrollbar{display:none}
+.fchip{all:unset;box-sizing:border-box;flex:none;cursor:pointer;min-height:40px;padding:0 14px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);font-family:var(--display);font-weight:500;font-size:18px;transition:border-color .3s,color .3s,background-color .3s}
+.fchip span{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.fchip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--tint)}
+.fchip:focus-visible,.seg button:focus-visible,.sortb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sortrow{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sorts{display:flex;align-items:center;gap:4px}
+.sortb{all:unset;cursor:pointer;min-height:36px;padding:0 10px;display:inline-flex;align-items:center;color:var(--ink-3);border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+.sortb[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+.series{border:1px solid var(--rule);padding:16px 18px;margin:0 0 28px}
+.series ol{list-style:none;margin:10px 0 0;padding:0}
+.series li{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:8px 0;border-top:1px dashed var(--rule)}
+.series li b,.series li a{font-family:var(--display);font-weight:500;font-size:19px;line-height:1.2}
+.series li.here b{color:var(--accent)}
+.series li a:hover{color:var(--accent)}
+@media (min-width:760px){
+  .bar nav .hide-s{display:inline-flex}
+  .bar{height:68px}
+  .note{grid-template-columns:minmax(0,1fr) 200px;gap:24px;align-items:baseline}
+  .note .meta{justify-content:flex-end}
+  .note .t{font-size:32px}
+  .filters{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .fchips{flex-wrap:wrap;overflow:visible;margin:0;padding:0;flex:1 1 100%;order:3}
+  .sortrow{order:2}
+}
+</style>
+</head>
+<body>
+
+<header class="in bar">
+  <a class="mark" href="#top" aria-label="Jacob Kondjo">JK</a>
+  <nav class="mono" aria-label="Navigation">
+    <a class="hide-s" href="#work" data-t="nav_work"></a>
+    <a href="#blog" id="nav-blog" data-t="nav_writing"></a>
+    <a class="hide-s" href="#contact" data-t="nav_contact"></a>
+    <span class="lang" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="fr">FR</button></span>
+  </nav>
+</header>
+
+<main class="view" id="v-home">
+  <section class="hero" id="top" aria-label="Jacob Kondjo">
+    <div class="space-wrap"><div class="space" id="space"><canvas id="field" aria-hidden="true"></canvas></div></div>
+    <div class="in">
+      <div class="id-row">
+        <h1><span>Jacob</span><span>Kondjo</span></h1>
+        <div class="creds" aria-label="Certifications">
+          <a class="cred" href="#proof"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODEgMjgiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojZWE0MzM1O30uY2xzLTJ7ZmlsbDojNDI4NWY0O30uY2xzLTN7ZmlsbDojMzRhODUzO30uY2xzLTR7ZmlsbDojZmJiYzA1O30uY2xzLTV7ZmlsbDojNWY2MzY4O308L3N0eWxlPjwvZGVmcz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMS44NSw3LjQxbDEsMCwyLjg1LTIuODUuMTQtMS4yMUExMi44MSwxMi44MSwwLDAsMCw1LDkuNmExLjU1LDEuNTUsMCwwLDEsMS0uMDZsNS43LS45NHMuMjktLjQ4LjQ0LS40NWE3LjExLDcuMTEsMCwwLDEsOS43My0uNzRaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjkuNzYsOS42YTEyLjg0LDEyLjg0LDAsMCwwLTMuODctNi4yNGwtNCw0QTcuMTEsNy4xMSwwLDAsMSwyNC41LDEzdi43MWEzLjU2LDMuNTYsMCwxLDEsMCw3LjEySDE3LjM4bC0uNzEuNzJ2NC4yN2wuNzEuNzFIMjQuNUE5LjI2LDkuMjYsMCwwLDAsMjkuNzYsOS42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTEwLjI1LDI2LjQ5aDcuMTJ2LTUuN0gxMC4yNWEzLjU0LDMuNTQsMCwwLDEtMS40Ny0uMzJsLTEsLjMxTDQuOTEsMjMuNjNsLS4yNSwxQTkuMjEsOS4yMSwwLDAsMCwxMC4yNSwyNi40OVoiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMC4yNSw4QTkuMjYsOS4yNiwwLDAsMCw0LjY2LDI0LjZsNC4xMy00LjEzYTMuNTYsMy41NiwwLDEsMSw0LjcxLTQuNzFsNC4xMy00LjEzQTkuMjUsOS4yNSwwLDAsMCwxMC4yNSw4WiIvPjxwYXRoIGNsYXNzPSJjbHMtNSIgZD0iTTUyLjc5LDIyLjUxYTkuMTEsOS4xMSwwLDAsMS02LjYtMi43MSw4LjgsOC44LDAsMCwxLTIuNzctNi41Miw4LjgxLDguODEsMCwwLDEsMi43Ny02LjUyQTkuMTEsOS4xMSwwLDAsMSw1Mi43OSw0YTguODQsOC44NCwwLDAsMSw2LjMzLDIuNTVMNTcuMzQsOC4zNmE2LjQxLDYuNDEsMCwwLDAtNC41NS0xLjgsNi4zNCw2LjM0LDAsMCwwLTQuNywyLDYuNTMsNi41MywwLDAsMC0xLjkzLDQuNzVBNi41Myw2LjUzLDAsMCwwLDQ4LjA5LDE4YTYuNzEsNi43MSwwLDAsMCw5LjM2LjExQTUuMzIsNS4zMiwwLDAsMCw1OC44MiwxNWgtNlYxMi40NGg4LjQ5QTguMTIsOC4xMiwwLDAsMSw2MS40MSwxNGE4LDgsMCwwLDEtMi4xOSw1LjlBOC41MSw4LjUxLDAsMCwxLDUyLjc5LDIyLjUxWm0xOS43NC0xLjdhNi4xMiw2LjEyLDAsMCwxLTguNDcsMCw1LjcsNS43LDAsMCwxLTEuNzMtNC4yNSw1LjcxLDUuNzEsMCwwLDEsMS43My00LjI1LDYuMTMsNi4xMywwLDAsMSw4LjQ3LDAsNS43MSw1LjcxLDAsMCwxLDEuNzMsNC4yNUE1LjcsNS43LDAsMCwxLDcyLjUyLDIwLjgxWm0tNi42LTEuNjdhMy4yNCwzLjI0LDAsMCwwLDQuNzMsMCwzLjU2LDMuNTYsMCwwLDAsMS0yLjU4LDMuNTcsMy41NywwLDAsMC0xLTIuNTksMy4yOSwzLjI5LDAsMCwwLTQuNzUsMCwzLjU3LDMuNTcsMCwwLDAtMSwyLjU5QTMuNTYsMy41NiwwLDAsMCw2NS45MiwxOS4xNFptMTkuNjIsMS42N2E2LjEyLDYuMTIsMCwwLDEtOC40NywwLDUuNyw1LjcsMCwwLDEtMS43My00LjI1LDUuNzEsNS43MSwwLDAsMSwxLjczLTQuMjUsNi4xMiw2LjEyLDAsMCwxLDguNDcsMCw1LjcxLDUuNzEsMCwwLDEsMS43Myw0LjI1QTUuNyw1LjcsMCwwLDEsODUuNTUsMjAuODFabS02LjYtMS42N2EzLjI0LDMuMjQsMCwwLDAsNC43MywwLDMuNTYsMy41NiwwLDAsMCwxLTIuNTgsMy41NywzLjU3LDAsMCwwLTEtMi41OSwzLjI5LDMuMjksMCwwLDAtNC43NSwwLDMuNTcsMy41NywwLDAsMC0xLDIuNTlBMy41NiwzLjU2LDAsMCwwLDc4Ljk0LDE5LjE0Wm0xNS4xNiw4LjcxYTUuMjQsNS4yNCwwLDAsMS0zLjMzLTEuMDYsNi4xMyw2LjEzLDAsMCwxLTEuOTQtMi40NmwyLjI4LS45NWEzLjg0LDMuODQsMCwwLDAsMS4xMywxLjQ5LDIuODUsMi44NSwwLDAsMCwxLjg3LjYzLDMsMywwLDAsMCwyLjMzLS45QTMuNjUsMy42NSwwLDAsMCw5Ny4yOCwyMnYtLjg2aC0uMDlhMy44MSwzLjgxLDAsMCwxLTMuMTMsMS4zNSw1LjQzLDUuNDMsMCwwLDEtNC0xLjc0LDUuNzUsNS43NSwwLDAsMS0xLjcxLTQuMTksNS44MSw1LjgxLDAsMCwxLDEuNzEtNC4yMiw1LjQyLDUuNDIsMCwwLDEsNC0xLjc1QTQuMyw0LjMsMCwwLDEsOTUuOSwxMWEzLjcsMy43LDAsMCwxLDEuMy45NWguMDlWMTFoMi40OFYyMS42NWE2LjIxLDYuMjEsMCwwLDEtMS41OSw0LjY1QTUuNiw1LjYsMCwwLDEsOTQuMTEsMjcuODVabS4xOC03LjY4YTIuOTEsMi45MSwwLDAsMCwyLjI2LTEsMy43LDMuNywwLDAsMCwuOTEtMi41NkEzLjc4LDMuNzgsMCwwLDAsOTYuNTUsMTRhMi45LDIuOSwwLDAsMC0yLjI2LTEsMy4wOSwzLjA5LDAsMCwwLTIuMzQsMSwzLjY1LDMuNjUsMCwwLDAtMSwyLjU5LDMuNTgsMy41OCwwLDAsMCwxLDIuNTZBMy4xLDMuMSwwLDAsMCw5NC4yOSwyMC4xN1ptOS44OS0xNS41VjIyLjE1aC0yLjYxVjQuNjdabTcuMTYsMTcuODRhNS42OCw1LjY4LDAsMCwxLTQuMjEtMS43MSw1Ljc5LDUuNzksMCwwLDEtMS42OS00LjI0LDUuODYsNS44NiwwLDAsMSwxLjYzLTQuMjgsNS4zNiw1LjM2LDAsMCwxLDQtMS42Nyw1LjA1LDUuMDUsMCwwLDEsMiwuMzksNC43MSw0LjcxLDAsMCwxLDEuNTMsMSw3LDcsMCwwLDEsMSwxLjIxLDcuMTUsNy4xNSwwLDAsMSwuNTksMS4xN2wuMjcuNjgtOCwzLjI5YTMsMywwLDAsMCwyLjg4LDEuOCwzLjQxLDMuNDEsMCwwLDAsMi45My0xLjY1bDIsMS4zNWE2LjU5LDYuNTksMCwwLDEtMS45MiwxLjgyQTUuNDQsNS40NCwwLDAsMSwxMTEuMzQsMjIuNTFaTTEwOCwxNi4zOGw1LjMyLTIuMjFhMS44NCwxLjg0LDAsMCwwLS44My0uOTEsMi43MSwyLjcxLDAsMCwwLTEuMzctLjM1LDMuMDksMy4wOSwwLDAsMC0yLjE1Ljk1QTMuMTcsMy4xNywwLDAsMCwxMDgsMTYuMzhaIi8+PHBhdGggY2xhc3M9ImNscy01IiBkPSJNMTMwLjEzLDIyLjUxYTguMjQsOC4yNCwwLDAsMS04LjM4LTguNDMsOC4yNCw4LjI0LDAsMCwxLDguMzgtOC40Myw3LjQ2LDcuNDYsMCwwLDEsNS45MywyLjY0bC0xLjQ0LDEuNGE1LjQ0LDUuNDQsMCwwLDAtNC40OC0yLjA1LDYuMTEsNi4xMSwwLDAsMC00LjQ1LDEuNzgsNi4yNCw2LjI0LDAsMCwwLTEuODEsNC42Niw2LjI0LDYuMjQsMCwwLDAsMS44MSw0LjY2LDYuMTEsNi4xMSwwLDAsMCw0LjQ1LDEuNzgsNi4zNiw2LjM2LDAsMCwwLDUtMi4zNGwxLjQ0LDEuNDRhNy44Niw3Ljg2LDAsMCwxLTIuNzcsMi4xMUE4LjQ4LDguNDgsMCwwLDEsMTMwLjEzLDIyLjUxWiIvPjxwYXRoIGNsYXNzPSJjbHMtNSIgZD0iTTE0MC40NSwyMi4xNWgtMi4wN1Y2aDIuMDdaIi8+PHBhdGggY2xhc3M9ImNscy01IiBkPSJNMTQzLjgzLDEyLjQzYTUuNzksNS43OSwwLDAsMSw4LjE2LDAsNS44NSw1Ljg1LDAsMCwxLDEuNiw0LjIsNS44NSw1Ljg1LDAsMCwxLTEuNiw0LjIsNS43OSw1Ljc5LDAsMCwxLTguMTYsMCw1Ljg1LDUuODUsMCwwLDEtMS42LTQuMkE1Ljg1LDUuODUsMCwwLDEsMTQzLjgzLDEyLjQzWm0xLjU0LDcuMWEzLjQ5LDMuNDksMCwwLDAsNS4wNywwLDQsNCwwLDAsMCwxLjA3LTIuOSw0LDQsMCwwLDAtMS4wNy0yLjksMy40OSwzLjQ5LDAsMCwwLTUuMDcsMCw0LDQsMCwwLDAtMS4wNywyLjlBNCw0LDAsMCwwLDE0NS4zOCwxOS41MloiLz48cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Ik0xNjUuMDYsMjIuMTVoLTJWMjAuNjJIMTYzQTMuODUsMy44NSwwLDAsMSwxNjEuNTQsMjJhNC4wOCw0LjA4LDAsMCwxLTIuMDUuNTUsMy44OSwzLjg5LDAsMCwxLTMuMTQtMS4yNiw1LDUsMCwwLDEtMS4wNy0zLjM4VjExLjExaDIuMDd2Ni40MnEwLDMuMDksMi43MywzLjA5YTIuNTQsMi41NCwwLDAsMCwyLjEtMSwzLjc3LDMuNzcsMCwwLDAsLjgxLTIuMzlWMTEuMTFoMi4wN1oiLz48cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Ik0xNzIuMDksMjIuNTFhNC44Niw0Ljg2LDAsMCwxLTMuNy0xLjY5LDYsNiwwLDAsMS0xLjU1LTQuMTksNiw2LDAsMCwxLDEuNTUtNC4xOSw0Ljg2LDQuODYsMCwwLDEsMy43LTEuNjksNC42OSw0LjY5LDAsMCwxLDIuMjYuNTQsMy44MywzLjgzLDAsMCwxLDEuNSwxLjM1aC4wOWwtLjA5LTEuNTNWNmgyLjA3VjIyLjE1aC0yVjIwLjYyaC0uMDlhMy44MywzLjgzLDAsMCwxLTEuNSwxLjM1QTQuNjksNC42OSwwLDAsMSwxNzIuMDksMjIuNTFabS4zNC0xLjg5YTMuMywzLjMsMCwwLDAsMi40OS0xLjA4LDQuMDUsNC4wNSwwLDAsMCwxLTIuOTEsNC4wNSw0LjA1LDAsMCwwLTEtMi45MSwzLjM4LDMuMzgsMCwwLDAtNSwwLDQsNCwwLDAsMC0xLDIuOSw0LDQsMCwwLDAsMSwyLjlBMy4zLDMuMywwLDAsMCwxNzIuNDMsMjAuNjJaIi8+PC9zdmc+" alt="Google Cloud Professional ML Engineer" width="110" height="17"></a>
+          <a class="cred" href="#proof"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAuMDAwNjEgMTM0LjExNDU2IiBoZWlnaHQ9IjEzNC4xMXB0IiB3aWR0aD0iNjQwcHQiIHZlcnNpb249IjEuMSIgeG1sbnM6Y2M9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL25zIyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIj4KIDxnIGZpbGw9IiM4YzE1MTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC00MCwtNDApIj4KICA8cGF0aCBkPSJtMzg5LjkyIDUzLjkyN2M1LjE4NzgtOC45ODM4IDE1LjYzNi0xMy43MiAyNS43NTgtMTMuODEgOS4yMzY4LTAuNTk2NTEgMTkuNjg1IDAuOTM5OTUgMjYuMTU2IDguMjQyNy0zLjI4OTggNC4zMzgyLTYuNDM1MSA4Ljc2NjktOS43MjQ5IDEzLjEwNS0zLjY2OTQtNC4yMTE3LTYuNjg4MS0xMC4xNDEtMTIuNjE3LTExLjMzNC01LjgzODYtMS44MDc2LTEzLjE3NyAxLjIyOTItMTQuNjk2IDcuNDgzNS0yLjQ1ODMgOS45MjM3LTAuOTc2MTEgMjAuMjk5LTEuMzM3NiAzMC40MjJoMTguOTYydjExLjI5OGgtMTguOThjMCAxNy4wMjggMCAzNC4wNTUtMC4wMTgxIDUxLjA4My0wLjA3MjMgNC44MjYzIDAuNzA0OTYgOS41OTg0IDEuNjA4OCAxNC4zMzQgNC4zMzgyIDIuMDA2NCA5LjAxOTkgMy4wMzY4IDEzLjgxIDMuMTI3Mi0wLjAxODEgMS4xNzQ5LTAuMDM2MiAzLjU0MjktMC4wNTQyIDQuNzM1OS0xNS41MDktMS4wMTIzLTMxLjAzNy0xLjMxOTYtNDYuNTI4LTAuMDE4MSAwLTAuOTk0MTggMC4wMzYxLTIuOTgyNSAwLjAzNjEtMy45NzY3IDQuODk4Ni0wLjg2NzY1IDEwLjk3Mi0zLjE0NTIgMTEuMTcxLTkuMDM4IDEuODk4LTIwLjAxIDAuNjE0NTktNDAuMTY1IDAuOTk0MTgtNjAuMjQ3LTMuNzc3OSAwLTcuNTU1OCAwLTExLjMzNC0wLjAxODA4IDAuMDE4MS0xLjY5OTEgMC4wNTQyLTMuNDE2NCAwLjA3MjMtNS4xMTU1IDMuODMyMS0xLjc3MTUgNy41NzM5LTMuNzQxNyAxMS4yNjEtNS43NjYzIDAtMTEuNjA1LTAuNjg2ODktMjQuMTUgNS40NTktMzQuNTA3eiIvPgogIDxwYXRoIGQ9Im02NjkuNSA0MC4wOTljLTEwLjAzMiAyLjMxMzctMjAuMTkgNC4yNjUzLTMwLjQ5NCA0LjcxNzItMC4xMDg0NiAwLjkzOTk1LTAuMzA4MDQgMi44MTk0LTAuMzk4NDQgMy43NTk0IDMuODMyMSAxLjE1NjkgMTAuMDg3IDAuODUxMDYgMTAuMzU4IDYuMjAxNiAxLjUzNjUgMTAuODQ2IDAuNDUyMDcgMjEuODUyIDAuNzU5MzcgMzIuNzctMTQuNzY4LTIuNTMwNi0zMS4yNzItMi4zNjc5LTQzLjgzNCA2LjgzMjgtMTMuNzU2IDkuNjM0NS0xOC40NzQgMjcuNjAzLTE3LjEgNDMuNjE5IDAuNzc3MjYgMTIuNDE4IDYuOTk0OSAyNS4xNjIgMTguMjU2IDMxLjIxNyAxMy40MTIgNy4zNzUgMzAuNTY3IDUuODU2NyA0My4xMy0yLjYzOTEgMC4wOTA0IDIuNTEyNiAwLjE0NDQgNS4wMjQ5IDAuMTYyNSA3LjUzNzUgOS43MjQ5LTIuNDc2NCAxOS42NjgtMy44Njg0IDI5LjY2NC00LjQ0Njl2LTQuMzM5MWMtMTQuMTY3LTIuNDEyNi0xMC4yNS04Ljk2OS0xMS4yNDQtMjAuMTE3IDAuMDE4MS0zNS4wMzEtMC41MjQ3LTcwLjA4MSAwLjc0MDYzLTEwNS4xMXptLTM2Ljc1MiA1Ni40OTJjNS45ODItMC4wNjMzNSAxMi4wNjYgMS44NDc4IDE2Ljk3NyA1LjE4MjggMC4wMTgxIDE4Ljg1My0wLjAzNjUgMzcuNzA2IDAuMDM1OSA1Ni41NTktMTAuNTIgNC44MjYzLTI0Ljc0NiA0LjQ4MjctMzIuOTg5LTQuNDQ2OS03LjA2NzctNy41NTU4LTguMjYwOC0xOC42MTgtNy42MjgxLTI4LjQ4OCAwLjcwNDk4LTguOTgzOCAyLjU4NjMtMTkuMjUxIDEwLjQzMS0yNC44MTkgMy45MzA0LTIuNjk2NyA4LjUyMDgtMy45Mzk4IDEzLjE3My0zLjk4OTF6Ii8+CiAgPHBhdGggZD0ibTczLjIwNiA1MS42MTNjMTEuOTEyLTAuNzIzMDQgMjMuODYgMC4wNTQyMyAzNS42NDYgMS43MTcyLTAuNzA0OTcgOC4zODczLTAuNjMyNjYgMTYuODI5IDAuMDE4MSAyNS4yMTYtMS4xMzg4IDAtMy40MTY0IDAuMDE4MDgtNC41NTUyIDAuMDE4MDgtMC45MDM4LTUuMjQyLTEuODQzOC0xMS42MDUtNy40MjkzLTEzLjkzNy04LjI3ODgtMy40ODg3LTE3Ljk2OC0zLjgzMjEtMjYuNTU0LTEuMzM3Ni0xMS4yMjUgMy4zMjYtMTMuMDY5IDE5Ljg0Ny00LjcxNzggMjcuMDYgMTAuNDQ4IDkuMTQ2NSAyMy4yNDYgMTUuMTMgMzMuOTQ3IDI0LjAwNSAxNi43NTYgMTMuMzQgMTQuNTY5IDQ0LjM5NS01LjMxNDQgNTMuNzQtMTYuNzM4IDcuNzM2NS0zNi4zODcgNS43ODQzLTUzLjY2OCAwLjkyMTg4IDAuMTA4LTguMzEtMC4xOTktMTYuNjItMC41NzktMjQuOTIgMS4yNDcyLTAuMDE4MSAzLjc1OTgtMC4wNzIzIDUuMDI1MS0wLjA5MDQgMC44ODU3MyA1LjIyNCAxLjY5OTEgMTEuNjQxIDYuOTk1NCAxNC4zMzQgOS40NzE4IDUuMzE0NCAyMS42OTEgNS43NDgyIDMxLjUyNSAxLjE3NDkgMTIuMjc0LTYuNzc4NSAxMC4wMTQtMjYuMzczLTEuNDY0Mi0zMi45NzEtOS45Ni03LjY3LTIxLjQwMi0xMy4zNC0zMC42MDMtMjItMTAuMTk1LTkuNDcyLTExLjQ2LTI2LjA2Ni00Ljg5OC0zNy45MDYgNS4zNjgtOS40MzYgMTYuMTk2LTE0LjE1MyAyNi42MjYtMTUuMDIxeiIvPgogIDxwYXRoIGQ9Im0xNDMuOSA2OS4zODJjMC45Mzk5NiAwLjA1NDIzIDIuODM3OSAwLjE0NDYxIDMuNzc3OSAwLjE5ODg0LTAuMDE4MSA2LjMwODUtMC4wMTgxIDEyLjU5OS0wLjAxODEgMTguOTA4aDI4LjkyMnYxMC44NDZoLTI4LjkyMmMwLjEwODQ1IDE1LjE4NC0wLjIzNDk5IDMwLjM4NiAwLjE2MjY4IDQ1LjU4OCAwLjM5NzY4IDUuNzg0MyAwLjU2MDM2IDEyLjk5NyA1Ljk2NTEgMTYuNTQgNi44MTQ3IDQuMDQ5IDE0Ljk2NyAxLjUxODQgMjEuNzgyLTEuMTM4OCAyLjA5NjggNS4xMzM2LTMuMjM1NiA4LjAwNzctNi45NDEyIDEwLjE0MS04LjY5NDYgNC4yMTE3LTE5LjMwNSA0LjY2MzYtMjguMjg5IDEuMTU2OS03LjY4MjMtMi44NzQxLTExLjM4OC0xMS4yNzktMTEuNzg2LTE4Ljk4LTAuOTIxODctMTcuNzUxIDAtMzUuNTM3IDAuMTQ0NjEtNTMuMzA2aC0xMS4yOThjLTAuMDE4MS0xLjE5My0wLjAzNjEtMi4zNjgtMC4wNTQyLTMuNTQyOSAxMi4yNzQtNC42Mjc1IDIwLjU1Mi0xNS4yMDIgMjYuNTU0LTI2LjQwOXoiLz4KICA8cGF0aCBkPSJtMjIxLjMgODUuNjIxYy0xMy4wMzItMC4xMzM5My0yNi4xNzUgNi4zMzkxLTMwLjM2MiAxOS40MjUgMS4xMzg4IDAuNjUwNzQgMy40NTI1IDEuOTMzNiA0LjYwOTQgMi41ODQ0IDUuMDA3LTguODM5MiAxNi43MDItMTMuMzc2IDI1LjkyLTguMjc4MSA3LjIzMDQgMy4yODk4IDcuODQ2MiAxMi4xMjggNy43MDE2IDE5LjA1Mi0xMS4zNyAzLjY1MTQtMjMuMTM4IDYuNTI2LTMzLjg3NSAxMS44NzctMTIuODcgNi43OTY2LTE0LjUzMyAyNi4wNjUtNS4zMTQxIDM2LjQ5NSAxMC44NjQgOS45NTk5IDI4Ljk5NCA4LjM1MDQgMzkuNzMxLTEuMDY3MiAzLjI3MTggNi40NzEyIDExLjAwOCA4Ljk0OCAxNy43NSA3LjA1IDUuODc0Ny0xLjEzODggOS43NjA3LTYuMDM3MiAxMy42MTEtMTAuMTc3LTAuNjY4ODMtMC43NTkxOS0yLjAyMzQtMi4yOTYyLTIuNjkyMi0zLjA3MzQtMi40MjIyIDAuNjE0NTktNS4xNTI0IDIuNTMwNi03LjUyMDMgMC42Njg3NS0zLjA3MjktMi4xMTQ5LTIuNjk0LTYuMzYyNi0yLjkxMDktOS42MzQ0IDAuMjE2OTYtMTQuMDI3IDAuOTk0MjQtMjguMDg5IDAuMjUzMTItNDIuMTM0LTAuMzYxNTItNy4yNjY2LTMuNjE0OS0xNC42OTctMTAuMDUtMTguNTExLTUuMDI3NC0yLjc5MDUtMTAuOTI4LTQuMjE1Ny0xNi44NTItNC4yNzY2em03LjY2ODggNDMuNzM3YzAuMDcyMyA5LjQ1MzggMC4wMDA4IDE4LjkwNyAwLjA3MzQgMjguMzYxLTYuMDU1NSAyLjY5MzMtMTMuMjUgNS4xODc5LTE5LjYzMSAyLjA5NjktNy44MDg4LTQuMTU3NS03LjQ4MjgtMTYuNTkzLTEuMDI5Ny0yMS44MTcgNi4yMDAxLTQuMjY1OSAxMy41NTYtNi4yNzI3IDIwLjU4OC04LjY0MDZ6Ii8+CiAgPHBhdGggZD0ibTQ3MC40MyA4NS45NzZjLTkuNTI2MSAwLjEwODQ2LTE5LjM2IDIuNDc2NS0yNi44MDggOC42NzY2LTExLjA4MSA4Ljk2NTctMTUuODg4IDIzLjc4OC0xNS40IDM3LjcwNi0wLjA1NDIgMTEuOTEyIDMuNjUxMyAyNC42MiAxMy4wMzMgMzIuNTM4IDExLjA4MSA5LjY1MjYgMjcuMTg2IDEwLjYxIDQwLjk3OCA3LjczNTkgMTQuNTUxLTMuMTk5NSAyNS40ODctMTUuOTQzIDI4LjU3OC0zMC4yMjMgMy4zMjYtMTQuODIyIDEuOTMzOS0zMi4wNDgtOC4yNjA5LTQ0LjAxNC03Ljg0NS05LjE4MjYtMjAuNDA3LTEyLjY1NC0zMi4xMi0xMi40MTl6bTAuMTI2NTcgMTAuMTE3YzUuMTE5MyAwLjA5OTU2IDEwLjE4NSAyLjIwMiAxMy40NjYgNi4yNzgxIDUuOTQ3IDcuMjg0NiA3LjUzOCAxNy4wODIgNy45NzE5IDI2LjIyOCAwLjA3MjMgOS45NTk5LTEuMTkzMiAyMC43MTQtNy40NjU2IDI4Ljg0OC02LjE2MzkgNy45NzE1LTE5LjQ0OSA4Ljg1NzQtMjYuNTUzIDEuNjgxMi01LjQ0MDktNS4wNDMyLTcuNDY2MS0xMi41NDQtOC42OTUzLTE5LjU5NC0xLjI4MzQtOS4zNjM0LTAuOTU3MzMtMTkuMTA3IDEuOTg5MS0yOC4xMjcgMi4wNjA3LTYuMDM3NCA2LjA3MzItMTIuMTQ3IDEyLjQzNi0xNC4yMDggMi4xODYxLTAuNzg1MTggNC41MjQ2LTEuMTUzMSA2Ljg1MTYtMS4xMDc4eiIvPgogIDxwYXRoIGQ9Im0yNjcuODcgOTEuNzI0YzEwLjEwNS0wLjE2MjY4IDIwLjM1NC0xLjIxMTEgMjkuNjgxLTUuMzg2NyAwLjMyNTM3IDIuNDA0MSAwLjU3ODQzIDQuODA4MiAwLjc3NzI3IDcuMjQ4NSAxMC43MTktNy4wMTM1IDI0LjU2NS05Ljc0MyAzNi44MzktNS40MDQ3IDguNzg1IDIuOTQ2NCAxNC45MzEgMTEuNTUxIDE1LjcwOCAyMC42NjEgMS44MDc2IDE3LjMzNS0wLjgxMzQyIDM0LjkwNSAxLjUwMDMgNTIuMjA0IDAuMjUzMDcgNS40NDA5IDYuMTA5NyA2LjY3MDEgMTAuMzU4IDcuNTU1OCAwLjAxODEgMS4wMTIzIDAuMDE4MSAzLjAzNjggMC4wMzYxIDQuMDQ5LTE0LjM1Mi0xLjEzODgtNDMuMDkzLTAuMDU0Mi00My4wOTMtMC4wNTQybC0wLjA1NDMtNC4wOTg3czEwLjM2Ny0yLjkxNDggMTEuMDI2LTUuODk3NGMyLjM2OC0xMi44NyAxLjgwNzYtMjYuMTc0IDEuNjgxMS0zOS4yNDMtMC40Njk5Ny03LjgwODgtMC4yNzExNC0xNy41Ny03LjczNjUtMjIuMzI0LTguMDA3Ny00LjYwOTQtMTcuODIzLTIuNDc2NC0yNi4wMTEgMC41MDYxMyAwLjA1NDIgMTYuOTE5IDAgMzMuODU2IDAgNTAuNzc2IDAuMjM0OTkgNC41MTktMC4wOTA0IDkuNjcwNyAyLjg1NiAxMy40MyAyLjQ3NjQgMS43MTcyIDUuNTg1NSAyLjAyNDUgOC40MjM0IDIuODE5OSAwLjAxODEgMS4wMTIzIDAuMDM2MSAzLjA1NDggMC4wMzYxIDQuMDg1Mi0xNC4xNTQtMC45MjE4OC0yOC4zNDMtMS41MTg0LTQyLjQ3OS0wLjAxODEgMC0xLjAxMjMgMC4wMzYyLTMuMDE4NyAwLjAzNjItNC4wMTI5IDQuMzAyMS0wLjk5NDE4IDkuOTc4LTIuMzQ5OSAxMC43OTEtNy41NTU4IDEuOTcwMy0xMi40NzIgMC40NTE5LTI1LjIxNiAwLjkyMTg3LTM3Ljc5Ny0wLjE4MDc2LTcuMTc2MiAwLjYxNDU5LTE0LjQ0My0wLjY1MDczLTIxLjUyOS0wLjk5NDE5LTQuODQ0NC02LjkwNS00LjU3MzItMTAuNjI5LTUuNTMxMyAwLTEuMTIwNy0wLjAxODEtMy4zNjIxLTAuMDE4MS00LjQ4Mjl6Ii8+CiAgPHBhdGggZD0ibTUyMC40NiA5MS4zNDRjMTAuMTIzLTAuMTQ0NjEgMjAuMjQ1LTEuNTE4NCAyOS44NjItNC43NTRsMC4yNzExNCA3LjQ0NzNjOS43MjQ5LTcuODI2OSAyNC4zODUtOS44MTUzIDM0Ljc0Mi0yLjA2MDdsLTEwLjggMTYuNDg0Yy01LjA0MzItNy43NzI3LTE1LjI3NC05LjY1MjYtMjMuMzU0LTUuNjk0IDAgMC0wLjA1NDIgMzQuMjE4IDAuMDU0MiA1MS4zMTggMC40MTU3NCAzLjgxNC0wLjE4MDc2IDguNzY2OSAzLjM5ODMgMTEuMjYxIDMuNDUyNSAyLjAyNDUgNy42NDYyIDEuOTE2MSAxMS40OTYgMi41MzA2IDAgMS4xNzQ5LTAuMDE4MSAzLjU2MS0wLjAxODEgNC43MzU5LTE1LjUyNy0xLjA0ODQtMzEuMDkxLTEuMjY1My00Ni42MTgtMC4wMzYybC0wLjAwMy00LjY5OTZjNS4wMDUyLTAuODUzNTEgMTAuMjE2LTIuNTg1IDEwLjk3NS01LjU2NzYgMi4xNTEtNy4zNTY5IDEuMTAyNi0xNS4xNDggMS4zMTk2LTIyLjcyMi0wLjIxNjkyLTEyLjA1NyAwLjQzMzgyLTI0LjEzMi0wLjI4OTIyLTM2LjE3LTAuMDU0Mi01Ljg1NjYtNi42ODgxLTYuMzgwOC0xMC45OS03LjIzMDQgMC4wMDctMS42NjAxLTAuMDI5MS0zLjM2NDgtMC4wMzU4LTQuODQ0M3oiLz4KIDwvZz4KPC9zdmc+Cg==" alt="Stanford Statistical Learning" width="81" height="17"></a>
+          <a class="cred" href="#proof"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE3LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhbHF1ZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjEwMHB4IiBoZWlnaHQ9IjE3LjkzM3B4IiB2aWV3Qm94PSIwIDAgMTAwIDE3LjkzMyIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDE3LjkzMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxwYXRoIGQ9Ik05Ny41MzQsNi45NzRoLTQuNTA4djMuMzYzaDQuNTA4VjYuOTc0eiBNMTAwLDAuMjQ5aC02Ljk3NHYzLjM2M0gxMDBWMC4yNDl6IE05Mi41MjgsMC4yNDloLTMuNjEydjE3LjQzNWgzLjYxMlYwLjI0OXogICBNNzkuNzAxLDAuMjQ5aC0zLjYxMnY3Ljg0NmwxLjI0NSwzLjI2M2MwLjYyMywxLjY0NCwxLjI5NSwyLjM0MSwyLjM2NiwyLjM0MVYwLjI0OXogTTcyLjEwNCwxNy42ODRWOS44MzhsLTEuMjQ1LTMuMzEzICBjLTAuNjIzLTEuNjQ0LTEuMjk1LTIuMjkxLTIuMzY2LTIuMjkxdjEzLjQ1SDcyLjEwNHogTTc5LjcwMSwxNy42ODR2LTMuNDg3Yy0wLjg3MiwwLTEuOTY4LTAuMzI0LTIuNzQtMi4zNjZMNzIuNjAyLDAuMjQ5aC00LjExICB2My40ODdjMC44NzIsMCwxLjk2OCwwLjI5OSwyLjc0LDIuMzY2bDQuMzU5LDExLjU4Mkg3OS43MDF6IE01OS45ODksMTQuNTcxYy0xLjAyMSwwLTEuNzQ0LTAuODQ3LTEuNzQ0LTEuODY4VjUuMjMxICBjMC0xLjAyMSwwLjcyMi0xLjg2OCwxLjc0NC0xLjg2OFYwYy0yLjkzOSwwLTUuMzU1LDIuMjkxLTUuMzU1LDUuMjMxdjcuNDcyYzAsMi45MzksMi40MTYsNS4yMzEsNS4zNTUsNS4yMzFWMTQuNTcxeiBNNjUuODQyLDUuMjMxICBDNjUuODQyLDIuMjkxLDYzLjQyNiwwLDYwLjQ4NywwdjMuMzYzYzEuMDIxLDAsMS43NDQsMC44NDcsMS43NDQsMS44Njh2Ny40NzJjMCwxLjAyMS0wLjcyMiwxLjg2OC0xLjc0NCwxLjg2OHYzLjM2MyAgYzIuOTM5LDAsNS4zNTUtMi4yOTEsNS4zNTUtNS4yMzFWNS4yMzF6IE01MS45ODIsMC4yNDlINDguMzd2MTcuNDM1aDMuNjEyVjAuMjQ5eiBNNDYuMTQzLDAuMjQ5SDM1LjE1OXYzLjM2M2gxMC45ODRWMC4yNDl6ICAgTTQyLjQ1Nyw0LjExaC0zLjYxMnYxMy41NzVoMy42MTJWNC4xMXogTTMwLjY2OSwxNS41NDJsLTAuNjQ4LTIuOTE0aC0yLjE5MmwxLjEyMS00LjgzMmMtMC40OTgtMi4wNDItMS4yNDUtMy41ODctMi43NjUtMy41ODcgIGwtMy4xMzgsMTMuNDc1aDMuNjM2bDAuNDk4LTIuMTQySDMwLjY2OXogTTM1LjMwMSwxNy42ODRsLTQuMDYtMTcuNDM1aC00LjEzNUwyNi4zMSwzLjczNmMxLjA0NiwwLDIuMzQxLDAuNjIzLDMuMDM5LDMuNzExICBsMi4zMTYsMTAuMjM3SDM1LjMwMXogTTIzLjI0NCwwLjI0OUgxMi4yNnYzLjM2M2gxMC45ODRWMC4yNDl6IE0xOS41NTgsNC4xMWgtMy42MTJ2MTMuNTc1aDMuNjEyVjQuMTF6IE0xMC45NTksNC45ODIgIEMxMC44MzUsMS45OTMsOC42NDMsMCw1Ljg1MywwdjMuMzYzQzYuNywzLjM4Nyw3LjM0OCw0LjEzNSw3LjM0OCw1LjIzMUwxMC45NTksNC45ODJ6IE01LjM1NSwxNC41NzEgIGMtMC45OTYtMC4wMjUtMS43NDQtMC45MjItMS43NDQtMS44NjhMMCwxMi44NzdjMC4xLDIuOTY0LDIuMzkxLDUuMDU2LDUuMzU1LDUuMDU2VjE0LjU3MXogTTUuODUzLDE3LjkzMyAgYzIuOTY0LDAsNS40OC0yLjMxNiw1LjQ4LTUuMzA1YzAtMi40NDEtMS4xNzEtNC4xMzUtMy40MzctNC44ODJDNy4yOTgsNy41NDcsNS45MjgsNy4wNDksNS40MDUsNi44NSAgQzQuNjA4LDYuNTUxLDMuODM2LDYuMDc3LDMuODM2LDUuMDMxYzAtMS4xNDYsMC44MjItMS42NDQsMS41MTktMS42NjlWMGMtMi43NCwwLTUuMTU2LDIuMDQyLTUuMTU2LDUuMDgxICBjMCwyLjAxOCwxLjAyMSw0LjA4NSwzLjYxMiw0Ljk4MmMwLjYyMywwLjIyNCwxLjI5NSwwLjQ3MywyLjA2NywwLjc3MmMxLjA0NiwwLjM5OSwxLjcxOSwwLjk5NiwxLjcxOSwxLjkxOCAgYzAsMS4xNDYtMC43MjIsMS43OTMtMS43NDQsMS44MThWMTcuOTMzeiIvPgo8L3N2Zz4=" alt="Station F" width="95" height="17"></a>
+        </div>
+      </div>
+      <p class="title">AI Engineer <span>Paris, France</span></p>
+      <p class="say" data-t="hero_say"></p>
+      <div class="ctas"><a class="btn solid" href="#network" data-t="cta_work"></a><a class="btn" href="#contact" data-t="cta_contact"></a></div>
+      <p class="legend" data-t="legend"></p>
+    </div>
+  </section>
+
+  <section class="s" id="network">
+    <div class="in">
+      <p class="mono lab kick" data-t="net_kick"></p>
+      <h2 data-t="net_h2"></h2>
+      <p class="lead" data-t="net_lead"></p>
+      <div class="inst">
+        <div class="mnet" id="mnet">
+          <svg class="mlines" id="mlines" aria-hidden="true"></svg>
+          <p class="mono mut mlab" data-t="l1"></p><div class="mrow" id="mr-d"></div>
+          <p class="mono mut mlab" data-t="l2"></p><div class="mrow" id="mr-s"></div>
+          <p class="mono mut mlab" data-t="l3"></p><div class="mrow" id="mr-p"></div>
+          <p class="mono mut mhint" data-t="hint"></p>
+        </div>
+        <aside class="panel" aria-live="polite">
+          <div class="p-h mono"><span class="lab" id="mode"></span><span class="mut" id="kind"></span></div>
+          <div><p class="p-t" id="p-t"></p><p class="p-w mono mut" id="p-w"></p></div>
+          <p class="p-q" id="p-q"></p>
+          <div class="p-tech" id="p-tech"></div>
+          <div class="dims" id="dims"></div>
+          <div class="nn-h mono"><span class="mut" data-t="nn_h"></span><span class="mut" data-t="cos"></span></div>
+          <ol class="nn" id="nn"></ol>
+          <div class="p-foot"><span class="p-m" id="p-m"></span><a class="mono ul p-l" id="p-l" href="#work"></a></div>
+        </aside>
+        <div class="graph-box">
+          <svg id="graph" role="img" aria-label="Domains, technologies, work"></svg>
+          <div class="graph-cap mono mut"><span data-t="cap_d"></span><span data-t="cap_s"></span><span data-t="cap_p"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="work">
+    <div class="in">
+      <p class="mono lab kick" data-t="work_kick"></p>
+      <h2 data-t="work_h2"></h2>
+      <p class="lead" data-t="work_lead"></p>
+      <div class="works" id="works"></div>
+      <div class="swipe"><span class="mono mut" data-t="swipe"></span><span class="dots" id="dots"></span></div>
+      <div class="also">
+        <a href="https://github.com/yvankondjo/Ragbench">RAGBench-12x<span data-t="oss"></span></a>
+        <a href="https://github.com/yvankondjo/VertexOps-Pipeline">VertexOps Pipeline<span data-t="oss"></span></a>
+        <a href="https://github.com/yvankondjo/GPT2"><span data-t="gpt2_name"></span><span data-t="oss"></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="proof">
+    <div class="in">
+      <p class="mono lab kick" data-t="proof_kick"></p>
+      <h2 data-t="proof_h2"></h2>
+      <div class="proofs">
+        <div class="proof"><div class="plate"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODEgMjgiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojZWE0MzM1O30uY2xzLTJ7ZmlsbDojNDI4NWY0O30uY2xzLTN7ZmlsbDojMzRhODUzO30uY2xzLTR7ZmlsbDojZmJiYzA1O30uY2xzLTV7ZmlsbDojNWY2MzY4O308L3N0eWxlPjwvZGVmcz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMS44NSw3LjQxbDEsMCwyLjg1LTIuODUuMTQtMS4yMUExMi44MSwxMi44MSwwLDAsMCw1LDkuNmExLjU1LDEuNTUsMCwwLDEsMS0uMDZsNS43LS45NHMuMjktLjQ4LjQ0LS40NWE3LjExLDcuMTEsMCwwLDEsOS43My0uNzRaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjkuNzYsOS42YTEyLjg0LDEyLjg0LDAsMCwwLTMuODctNi4yNGwtNCw0QTcuMTEsNy4xMSwwLDAsMSwyNC41LDEzdi43MWEzLjU2LDMuNTYsMCwxLDEsMCw3LjEySDE3LjM4bC0uNzEuNzJ2NC4yN2wuNzEuNzFIMjQuNUE5LjI2LDkuMjYsMCwwLDAsMjkuNzYsOS42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTEwLjI1LDI2LjQ5aDcuMTJ2LTUuN0gxMC4yNWEzLjU0LDMuNTQsMCwwLDEtMS40Ny0uMzJsLTEsLjMxTDQuOTEsMjMuNjNsLS4yNSwxQTkuMjEsOS4yMSwwLDAsMCwxMC4yNSwyNi40OVoiLz48cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0xMC4yNSw4QTkuMjYsOS4yNiwwLDAsMCw0LjY2LDI0LjZsNC4xMy00LjEzYTMuNTYsMy41NiwwLDEsMSw0LjcxLTQuNzFsNC4xMy00LjEzQTkuMjUsOS4yNSwwLDAsMCwxMC4yNSw4WiIvPjxwYXRoIGNsYXNzPSJjbHMtNSIgZD0iTTUyLjc5LDIyLjUxYTkuMTEsOS4xMSwwLDAsMS02LjYtMi43MSw4LjgsOC44LDAsMCwxLTIuNzctNi41Miw4LjgxLDguODEsMCwwLDEsMi43Ny02LjUyQTkuMTEsOS4xMSwwLDAsMSw1Mi43OSw0YTguODQsOC44NCwwLDAsMSw2LjMzLDIuNTVMNTcuMzQsOC4zNmE2LjQxLDYuNDEsMCwwLDAtNC41NS0xLjgsNi4zNCw2LjM0LDAsMCwwLTQuNywyLDYuNTMsNi41MywwLDAsMC0xLjkzLDQuNzVBNi41Myw2LjUzLDAsMCwwLDQ4LjA5LDE4YTYuNzEsNi43MSwwLDAsMCw5LjM2LjExQTUuMzIsNS4zMiwwLDAsMCw1OC44MiwxNWgtNlYxMi40NGg4LjQ5QTguMTIsOC4xMiwwLDAsMSw2MS40MSwxNGE4LDgsMCwwLDEtMi4xOSw1LjlBOC41MSw4LjUxLDAsMCwxLDUyLjc5LDIyLjUxWm0xOS43NC0xLjdhNi4xMiw2LjEyLDAsMCwxLTguNDcsMCw1LjcsNS43LDAsMCwxLTEuNzMtNC4yNSw1LjcxLDUuNzEsMCwwLDEsMS43My00LjI1LDYuMTMsNi4xMywwLDAsMSw4LjQ3LDAsNS43MSw1LjcxLDAsMCwxLDEuNzMsNC4yNUE1LjcsNS43LDAsMCwxLDcyLjUyLDIwLjgxWm0tNi42LTEuNjdhMy4yNCwzLjI0LDAsMCwwLDQuNzMsMCwzLjU2LDMuNTYsMCwwLDAsMS0yLjU4LDMuNTcsMy41NywwLDAsMC0xLTIuNTksMy4yOSwzLjI5LDAsMCwwLTQuNzUsMCwzLjU3LDMuNTcsMCwwLDAtMSwyLjU5QTMuNTYsMy41NiwwLDAsMCw2NS45MiwxOS4xNFptMTkuNjIsMS42N2E2LjEyLDYuMTIsMCwwLDEtOC40NywwLDUuNyw1LjcsMCwwLDEtMS43My00LjI1LDUuNzEsNS43MSwwLDAsMSwxLjczLTQuMjUsNi4xMiw2LjEyLDAsMCwxLDguNDcsMCw1LjcxLDUuNzEsMCwwLDEsMS43Myw0LjI1QTUuNyw1LjcsMCwwLDEsODUuNTUsMjAuODFabS02LjYtMS42N2EzLjI0LDMuMjQsMCwwLDAsNC43MywwLDMuNTYsMy41NiwwLDAsMCwxLTIuNTgsMy41NywzLjU3LDAsMCwwLTEtMi41OSwzLjI5LDMuMjksMCwwLDAtNC43NSwwLDMuNTcsMy41NywwLDAsMC0xLDIuNTlBMy41NiwzLjU2LDAsMCwwLDc4Ljk0LDE5LjE0Wm0xNS4xNiw4LjcxYTUuMjQsNS4yNCwwLDAsMS0zLjMzLTEuMDYsNi4xMyw2LjEzLDAsMCwxLTEuOTQtMi40NmwyLjI4LS45NWEzLjg0LDMuODQsMCwwLDAsMS4xMywxLjQ5LDIuODUsMi44NSwwLDAsMCwxLjg3LjYzLDMsMywwLDAsMCwyLjMzLS45QTMuNjUsMy42NSwwLDAsMCw5Ny4yOCwyMnYtLjg2aC0uMDlhMy44MSwzLjgxLDAsMCwxLTMuMTMsMS4zNSw1LjQzLDUuNDMsMCwwLDEtNC0xLjc0LDUuNzUsNS43NSwwLDAsMS0xLjcxLTQuMTksNS44MSw1LjgxLDAsMCwxLDEuNzEtNC4yMiw1LjQyLDUuNDIsMCwwLDEsNC0xLjc1QTQuMyw0LjMsMCwwLDEsOTUuOSwxMWEzLjcsMy43LDAsMCwxLDEuMy45NWguMDlWMTFoMi40OFYyMS42NWE2LjIxLDYuMjEsMCwwLDEtMS41OSw0LjY1QTUuNiw1LjYsMCwwLDEsOTQuMTEsMjcuODVabS4xOC03LjY4YTIuOTEsMi45MSwwLDAsMCwyLjI2LTEsMy43LDMuNywwLDAsMCwuOTEtMi41NkEzLjc4LDMuNzgsMCwwLDAsOTYuNTUsMTRhMi45LDIuOSwwLDAsMC0yLjI2LTEsMy4wOSwzLjA5LDAsMCwwLTIuMzQsMSwzLjY1LDMuNjUsMCwwLDAtMSwyLjU5LDMuNTgsMy41OCwwLDAsMCwxLDIuNTZBMy4xLDMuMSwwLDAsMCw5NC4yOSwyMC4xN1ptOS44OS0xNS41VjIyLjE1aC0yLjYxVjQuNjdabTcuMTYsMTcuODRhNS42OCw1LjY4LDAsMCwxLTQuMjEtMS43MSw1Ljc5LDUuNzksMCwwLDEtMS42OS00LjI0LDUuODYsNS44NiwwLDAsMSwxLjYzLTQuMjgsNS4zNiw1LjM2LDAsMCwxLDQtMS42Nyw1LjA1LDUuMDUsMCwwLDEsMiwuMzksNC43MSw0LjcxLDAsMCwxLDEuNTMsMSw3LDcsMCwwLDEsMSwxLjIxLDcuMTUsNy4xNSwwLDAsMSwuNTksMS4xN2wuMjcuNjgtOCwzLjI5YTMsMywwLDAsMCwyLjg4LDEuOCwzLjQxLDMuNDEsMCwwLDAsMi45My0xLjY1bDIsMS4zNWE2LjU5LDYuNTksMCwwLDEtMS45MiwxLjgyQTUuNDQsNS40NCwwLDAsMSwxMTEuMzQsMjIuNTFaTTEwOCwxNi4zOGw1LjMyLTIuMjFhMS44NCwxLjg0LDAsMCwwLS44My0uOTEsMi43MSwyLjcxLDAsMCwwLTEuMzctLjM1LDMuMDksMy4wOSwwLDAsMC0yLjE1Ljk1QTMuMTcsMy4xNywwLDAsMCwxMDgsMTYuMzhaIi8+PHBhdGggY2xhc3M9ImNscy01IiBkPSJNMTMwLjEzLDIyLjUxYTguMjQsOC4yNCwwLDAsMS04LjM4LTguNDMsOC4yNCw4LjI0LDAsMCwxLDguMzgtOC40Myw3LjQ2LDcuNDYsMCwwLDEsNS45MywyLjY0bC0xLjQ0LDEuNGE1LjQ0LDUuNDQsMCwwLDAtNC40OC0yLjA1LDYuMTEsNi4xMSwwLDAsMC00LjQ1LDEuNzgsNi4yNCw2LjI0LDAsMCwwLTEuODEsNC42Niw2LjI0LDYuMjQsMCwwLDAsMS44MSw0LjY2LDYuMTEsNi4xMSwwLDAsMCw0LjQ1LDEuNzgsNi4zNiw2LjM2LDAsMCwwLDUtMi4zNGwxLjQ0LDEuNDRhNy44Niw3Ljg2LDAsMCwxLTIuNzcsMi4xMUE4LjQ4LDguNDgsMCwwLDEsMTMwLjEzLDIyLjUxWiIvPjxwYXRoIGNsYXNzPSJjbHMtNSIgZD0iTTE0MC40NSwyMi4xNWgtMi4wN1Y2aDIuMDdaIi8+PHBhdGggY2xhc3M9ImNscy01IiBkPSJNMTQzLjgzLDEyLjQzYTUuNzksNS43OSwwLDAsMSw4LjE2LDAsNS44NSw1Ljg1LDAsMCwxLDEuNiw0LjIsNS44NSw1Ljg1LDAsMCwxLTEuNiw0LjIsNS43OSw1Ljc5LDAsMCwxLTguMTYsMCw1Ljg1LDUuODUsMCwwLDEtMS42LTQuMkE1Ljg1LDUuODUsMCwwLDEsMTQzLjgzLDEyLjQzWm0xLjU0LDcuMWEzLjQ5LDMuNDksMCwwLDAsNS4wNywwLDQsNCwwLDAsMCwxLjA3LTIuOSw0LDQsMCwwLDAtMS4wNy0yLjksMy40OSwzLjQ5LDAsMCwwLTUuMDcsMCw0LDQsMCwwLDAtMS4wNywyLjlBNCw0LDAsMCwwLDE0NS4zOCwxOS41MloiLz48cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Ik0xNjUuMDYsMjIuMTVoLTJWMjAuNjJIMTYzQTMuODUsMy44NSwwLDAsMSwxNjEuNTQsMjJhNC4wOCw0LjA4LDAsMCwxLTIuMDUuNTUsMy44OSwzLjg5LDAsMCwxLTMuMTQtMS4yNiw1LDUsMCwwLDEtMS4wNy0zLjM4VjExLjExaDIuMDd2Ni40MnEwLDMuMDksMi43MywzLjA5YTIuNTQsMi41NCwwLDAsMCwyLjEtMSwzLjc3LDMuNzcsMCwwLDAsLjgxLTIuMzlWMTEuMTFoMi4wN1oiLz48cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Ik0xNzIuMDksMjIuNTFhNC44Niw0Ljg2LDAsMCwxLTMuNy0xLjY5LDYsNiwwLDAsMS0xLjU1LTQuMTksNiw2LDAsMCwxLDEuNTUtNC4xOSw0Ljg2LDQuODYsMCwwLDEsMy43LTEuNjksNC42OSw0LjY5LDAsMCwxLDIuMjYuNTQsMy44MywzLjgzLDAsMCwxLDEuNSwxLjM1aC4wOWwtLjA5LTEuNTNWNmgyLjA3VjIyLjE1aC0yVjIwLjYyaC0uMDlhMy44MywzLjgzLDAsMCwxLTEuNSwxLjM1QTQuNjksNC42OSwwLDAsMSwxNzIuMDksMjIuNTFabS4zNC0xLjg5YTMuMywzLjMsMCwwLDAsMi40OS0xLjA4LDQuMDUsNC4wNSwwLDAsMCwxLTIuOTEsNC4wNSw0LjA1LDAsMCwwLTEtMi45MSwzLjM4LDMuMzgsMCwwLDAtNSwwLDQsNCwwLDAsMC0xLDIuOSw0LDQsMCwwLDAsMSwyLjlBMy4zLDMuMywwLDAsMCwxNzIuNDMsMjAuNjJaIi8+PC9zdmc+" alt="Google Cloud" width="190" height="30"></div><div><b>Professional Machine Learning Engineer</b><span>Google Cloud</span></div></div>
+        <div class="proof"><div class="plate"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAuMDAwNjEgMTM0LjExNDU2IiBoZWlnaHQ9IjEzNC4xMXB0IiB3aWR0aD0iNjQwcHQiIHZlcnNpb249IjEuMSIgeG1sbnM6Y2M9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL25zIyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIj4KIDxnIGZpbGw9IiM4YzE1MTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC00MCwtNDApIj4KICA8cGF0aCBkPSJtMzg5LjkyIDUzLjkyN2M1LjE4NzgtOC45ODM4IDE1LjYzNi0xMy43MiAyNS43NTgtMTMuODEgOS4yMzY4LTAuNTk2NTEgMTkuNjg1IDAuOTM5OTUgMjYuMTU2IDguMjQyNy0zLjI4OTggNC4zMzgyLTYuNDM1MSA4Ljc2NjktOS43MjQ5IDEzLjEwNS0zLjY2OTQtNC4yMTE3LTYuNjg4MS0xMC4xNDEtMTIuNjE3LTExLjMzNC01LjgzODYtMS44MDc2LTEzLjE3NyAxLjIyOTItMTQuNjk2IDcuNDgzNS0yLjQ1ODMgOS45MjM3LTAuOTc2MTEgMjAuMjk5LTEuMzM3NiAzMC40MjJoMTguOTYydjExLjI5OGgtMTguOThjMCAxNy4wMjggMCAzNC4wNTUtMC4wMTgxIDUxLjA4My0wLjA3MjMgNC44MjYzIDAuNzA0OTYgOS41OTg0IDEuNjA4OCAxNC4zMzQgNC4zMzgyIDIuMDA2NCA5LjAxOTkgMy4wMzY4IDEzLjgxIDMuMTI3Mi0wLjAxODEgMS4xNzQ5LTAuMDM2MiAzLjU0MjktMC4wNTQyIDQuNzM1OS0xNS41MDktMS4wMTIzLTMxLjAzNy0xLjMxOTYtNDYuNTI4LTAuMDE4MSAwLTAuOTk0MTggMC4wMzYxLTIuOTgyNSAwLjAzNjEtMy45NzY3IDQuODk4Ni0wLjg2NzY1IDEwLjk3Mi0zLjE0NTIgMTEuMTcxLTkuMDM4IDEuODk4LTIwLjAxIDAuNjE0NTktNDAuMTY1IDAuOTk0MTgtNjAuMjQ3LTMuNzc3OSAwLTcuNTU1OCAwLTExLjMzNC0wLjAxODA4IDAuMDE4MS0xLjY5OTEgMC4wNTQyLTMuNDE2NCAwLjA3MjMtNS4xMTU1IDMuODMyMS0xLjc3MTUgNy41NzM5LTMuNzQxNyAxMS4yNjEtNS43NjYzIDAtMTEuNjA1LTAuNjg2ODktMjQuMTUgNS40NTktMzQuNTA3eiIvPgogIDxwYXRoIGQ9Im02NjkuNSA0MC4wOTljLTEwLjAzMiAyLjMxMzctMjAuMTkgNC4yNjUzLTMwLjQ5NCA0LjcxNzItMC4xMDg0NiAwLjkzOTk1LTAuMzA4MDQgMi44MTk0LTAuMzk4NDQgMy43NTk0IDMuODMyMSAxLjE1NjkgMTAuMDg3IDAuODUxMDYgMTAuMzU4IDYuMjAxNiAxLjUzNjUgMTAuODQ2IDAuNDUyMDcgMjEuODUyIDAuNzU5MzcgMzIuNzctMTQuNzY4LTIuNTMwNi0zMS4yNzItMi4zNjc5LTQzLjgzNCA2LjgzMjgtMTMuNzU2IDkuNjM0NS0xOC40NzQgMjcuNjAzLTE3LjEgNDMuNjE5IDAuNzc3MjYgMTIuNDE4IDYuOTk0OSAyNS4xNjIgMTguMjU2IDMxLjIxNyAxMy40MTIgNy4zNzUgMzAuNTY3IDUuODU2NyA0My4xMy0yLjYzOTEgMC4wOTA0IDIuNTEyNiAwLjE0NDQgNS4wMjQ5IDAuMTYyNSA3LjUzNzUgOS43MjQ5LTIuNDc2NCAxOS42NjgtMy44Njg0IDI5LjY2NC00LjQ0Njl2LTQuMzM5MWMtMTQuMTY3LTIuNDEyNi0xMC4yNS04Ljk2OS0xMS4yNDQtMjAuMTE3IDAuMDE4MS0zNS4wMzEtMC41MjQ3LTcwLjA4MSAwLjc0MDYzLTEwNS4xMXptLTM2Ljc1MiA1Ni40OTJjNS45ODItMC4wNjMzNSAxMi4wNjYgMS44NDc4IDE2Ljk3NyA1LjE4MjggMC4wMTgxIDE4Ljg1My0wLjAzNjUgMzcuNzA2IDAuMDM1OSA1Ni41NTktMTAuNTIgNC44MjYzLTI0Ljc0NiA0LjQ4MjctMzIuOTg5LTQuNDQ2OS03LjA2NzctNy41NTU4LTguMjYwOC0xOC42MTgtNy42MjgxLTI4LjQ4OCAwLjcwNDk4LTguOTgzOCAyLjU4NjMtMTkuMjUxIDEwLjQzMS0yNC44MTkgMy45MzA0LTIuNjk2NyA4LjUyMDgtMy45Mzk4IDEzLjE3My0zLjk4OTF6Ii8+CiAgPHBhdGggZD0ibTczLjIwNiA1MS42MTNjMTEuOTEyLTAuNzIzMDQgMjMuODYgMC4wNTQyMyAzNS42NDYgMS43MTcyLTAuNzA0OTcgOC4zODczLTAuNjMyNjYgMTYuODI5IDAuMDE4MSAyNS4yMTYtMS4xMzg4IDAtMy40MTY0IDAuMDE4MDgtNC41NTUyIDAuMDE4MDgtMC45MDM4LTUuMjQyLTEuODQzOC0xMS42MDUtNy40MjkzLTEzLjkzNy04LjI3ODgtMy40ODg3LTE3Ljk2OC0zLjgzMjEtMjYuNTU0LTEuMzM3Ni0xMS4yMjUgMy4zMjYtMTMuMDY5IDE5Ljg0Ny00LjcxNzggMjcuMDYgMTAuNDQ4IDkuMTQ2NSAyMy4yNDYgMTUuMTMgMzMuOTQ3IDI0LjAwNSAxNi43NTYgMTMuMzQgMTQuNTY5IDQ0LjM5NS01LjMxNDQgNTMuNzQtMTYuNzM4IDcuNzM2NS0zNi4zODcgNS43ODQzLTUzLjY2OCAwLjkyMTg4IDAuMTA4LTguMzEtMC4xOTktMTYuNjItMC41NzktMjQuOTIgMS4yNDcyLTAuMDE4MSAzLjc1OTgtMC4wNzIzIDUuMDI1MS0wLjA5MDQgMC44ODU3MyA1LjIyNCAxLjY5OTEgMTEuNjQxIDYuOTk1NCAxNC4zMzQgOS40NzE4IDUuMzE0NCAyMS42OTEgNS43NDgyIDMxLjUyNSAxLjE3NDkgMTIuMjc0LTYuNzc4NSAxMC4wMTQtMjYuMzczLTEuNDY0Mi0zMi45NzEtOS45Ni03LjY3LTIxLjQwMi0xMy4zNC0zMC42MDMtMjItMTAuMTk1LTkuNDcyLTExLjQ2LTI2LjA2Ni00Ljg5OC0zNy45MDYgNS4zNjgtOS40MzYgMTYuMTk2LTE0LjE1MyAyNi42MjYtMTUuMDIxeiIvPgogIDxwYXRoIGQ9Im0xNDMuOSA2OS4zODJjMC45Mzk5NiAwLjA1NDIzIDIuODM3OSAwLjE0NDYxIDMuNzc3OSAwLjE5ODg0LTAuMDE4MSA2LjMwODUtMC4wMTgxIDEyLjU5OS0wLjAxODEgMTguOTA4aDI4LjkyMnYxMC44NDZoLTI4LjkyMmMwLjEwODQ1IDE1LjE4NC0wLjIzNDk5IDMwLjM4NiAwLjE2MjY4IDQ1LjU4OCAwLjM5NzY4IDUuNzg0MyAwLjU2MDM2IDEyLjk5NyA1Ljk2NTEgMTYuNTQgNi44MTQ3IDQuMDQ5IDE0Ljk2NyAxLjUxODQgMjEuNzgyLTEuMTM4OCAyLjA5NjggNS4xMzM2LTMuMjM1NiA4LjAwNzctNi45NDEyIDEwLjE0MS04LjY5NDYgNC4yMTE3LTE5LjMwNSA0LjY2MzYtMjguMjg5IDEuMTU2OS03LjY4MjMtMi44NzQxLTExLjM4OC0xMS4yNzktMTEuNzg2LTE4Ljk4LTAuOTIxODctMTcuNzUxIDAtMzUuNTM3IDAuMTQ0NjEtNTMuMzA2aC0xMS4yOThjLTAuMDE4MS0xLjE5My0wLjAzNjEtMi4zNjgtMC4wNTQyLTMuNTQyOSAxMi4yNzQtNC42Mjc1IDIwLjU1Mi0xNS4yMDIgMjYuNTU0LTI2LjQwOXoiLz4KICA8cGF0aCBkPSJtMjIxLjMgODUuNjIxYy0xMy4wMzItMC4xMzM5My0yNi4xNzUgNi4zMzkxLTMwLjM2MiAxOS40MjUgMS4xMzg4IDAuNjUwNzQgMy40NTI1IDEuOTMzNiA0LjYwOTQgMi41ODQ0IDUuMDA3LTguODM5MiAxNi43MDItMTMuMzc2IDI1LjkyLTguMjc4MSA3LjIzMDQgMy4yODk4IDcuODQ2MiAxMi4xMjggNy43MDE2IDE5LjA1Mi0xMS4zNyAzLjY1MTQtMjMuMTM4IDYuNTI2LTMzLjg3NSAxMS44NzctMTIuODcgNi43OTY2LTE0LjUzMyAyNi4wNjUtNS4zMTQxIDM2LjQ5NSAxMC44NjQgOS45NTk5IDI4Ljk5NCA4LjM1MDQgMzkuNzMxLTEuMDY3MiAzLjI3MTggNi40NzEyIDExLjAwOCA4Ljk0OCAxNy43NSA3LjA1IDUuODc0Ny0xLjEzODggOS43NjA3LTYuMDM3MiAxMy42MTEtMTAuMTc3LTAuNjY4ODMtMC43NTkxOS0yLjAyMzQtMi4yOTYyLTIuNjkyMi0zLjA3MzQtMi40MjIyIDAuNjE0NTktNS4xNTI0IDIuNTMwNi03LjUyMDMgMC42Njg3NS0zLjA3MjktMi4xMTQ5LTIuNjk0LTYuMzYyNi0yLjkxMDktOS42MzQ0IDAuMjE2OTYtMTQuMDI3IDAuOTk0MjQtMjguMDg5IDAuMjUzMTItNDIuMTM0LTAuMzYxNTItNy4yNjY2LTMuNjE0OS0xNC42OTctMTAuMDUtMTguNTExLTUuMDI3NC0yLjc5MDUtMTAuOTI4LTQuMjE1Ny0xNi44NTItNC4yNzY2em03LjY2ODggNDMuNzM3YzAuMDcyMyA5LjQ1MzggMC4wMDA4IDE4LjkwNyAwLjA3MzQgMjguMzYxLTYuMDU1NSAyLjY5MzMtMTMuMjUgNS4xODc5LTE5LjYzMSAyLjA5NjktNy44MDg4LTQuMTU3NS03LjQ4MjgtMTYuNTkzLTEuMDI5Ny0yMS44MTcgNi4yMDAxLTQuMjY1OSAxMy41NTYtNi4yNzI3IDIwLjU4OC04LjY0MDZ6Ii8+CiAgPHBhdGggZD0ibTQ3MC40MyA4NS45NzZjLTkuNTI2MSAwLjEwODQ2LTE5LjM2IDIuNDc2NS0yNi44MDggOC42NzY2LTExLjA4MSA4Ljk2NTctMTUuODg4IDIzLjc4OC0xNS40IDM3LjcwNi0wLjA1NDIgMTEuOTEyIDMuNjUxMyAyNC42MiAxMy4wMzMgMzIuNTM4IDExLjA4MSA5LjY1MjYgMjcuMTg2IDEwLjYxIDQwLjk3OCA3LjczNTkgMTQuNTUxLTMuMTk5NSAyNS40ODctMTUuOTQzIDI4LjU3OC0zMC4yMjMgMy4zMjYtMTQuODIyIDEuOTMzOS0zMi4wNDgtOC4yNjA5LTQ0LjAxNC03Ljg0NS05LjE4MjYtMjAuNDA3LTEyLjY1NC0zMi4xMi0xMi40MTl6bTAuMTI2NTcgMTAuMTE3YzUuMTE5MyAwLjA5OTU2IDEwLjE4NSAyLjIwMiAxMy40NjYgNi4yNzgxIDUuOTQ3IDcuMjg0NiA3LjUzOCAxNy4wODIgNy45NzE5IDI2LjIyOCAwLjA3MjMgOS45NTk5LTEuMTkzMiAyMC43MTQtNy40NjU2IDI4Ljg0OC02LjE2MzkgNy45NzE1LTE5LjQ0OSA4Ljg1NzQtMjYuNTUzIDEuNjgxMi01LjQ0MDktNS4wNDMyLTcuNDY2MS0xMi41NDQtOC42OTUzLTE5LjU5NC0xLjI4MzQtOS4zNjM0LTAuOTU3MzMtMTkuMTA3IDEuOTg5MS0yOC4xMjcgMi4wNjA3LTYuMDM3NCA2LjA3MzItMTIuMTQ3IDEyLjQzNi0xNC4yMDggMi4xODYxLTAuNzg1MTggNC41MjQ2LTEuMTUzMSA2Ljg1MTYtMS4xMDc4eiIvPgogIDxwYXRoIGQ9Im0yNjcuODcgOTEuNzI0YzEwLjEwNS0wLjE2MjY4IDIwLjM1NC0xLjIxMTEgMjkuNjgxLTUuMzg2NyAwLjMyNTM3IDIuNDA0MSAwLjU3ODQzIDQuODA4MiAwLjc3NzI3IDcuMjQ4NSAxMC43MTktNy4wMTM1IDI0LjU2NS05Ljc0MyAzNi44MzktNS40MDQ3IDguNzg1IDIuOTQ2NCAxNC45MzEgMTEuNTUxIDE1LjcwOCAyMC42NjEgMS44MDc2IDE3LjMzNS0wLjgxMzQyIDM0LjkwNSAxLjUwMDMgNTIuMjA0IDAuMjUzMDcgNS40NDA5IDYuMTA5NyA2LjY3MDEgMTAuMzU4IDcuNTU1OCAwLjAxODEgMS4wMTIzIDAuMDE4MSAzLjAzNjggMC4wMzYxIDQuMDQ5LTE0LjM1Mi0xLjEzODgtNDMuMDkzLTAuMDU0Mi00My4wOTMtMC4wNTQybC0wLjA1NDMtNC4wOTg3czEwLjM2Ny0yLjkxNDggMTEuMDI2LTUuODk3NGMyLjM2OC0xMi44NyAxLjgwNzYtMjYuMTc0IDEuNjgxMS0zOS4yNDMtMC40Njk5Ny03LjgwODgtMC4yNzExNC0xNy41Ny03LjczNjUtMjIuMzI0LTguMDA3Ny00LjYwOTQtMTcuODIzLTIuNDc2NC0yNi4wMTEgMC41MDYxMyAwLjA1NDIgMTYuOTE5IDAgMzMuODU2IDAgNTAuNzc2IDAuMjM0OTkgNC41MTktMC4wOTA0IDkuNjcwNyAyLjg1NiAxMy40MyAyLjQ3NjQgMS43MTcyIDUuNTg1NSAyLjAyNDUgOC40MjM0IDIuODE5OSAwLjAxODEgMS4wMTIzIDAuMDM2MSAzLjA1NDggMC4wMzYxIDQuMDg1Mi0xNC4xNTQtMC45MjE4OC0yOC4zNDMtMS41MTg0LTQyLjQ3OS0wLjAxODEgMC0xLjAxMjMgMC4wMzYyLTMuMDE4NyAwLjAzNjItNC4wMTI5IDQuMzAyMS0wLjk5NDE4IDkuOTc4LTIuMzQ5OSAxMC43OTEtNy41NTU4IDEuOTcwMy0xMi40NzIgMC40NTE5LTI1LjIxNiAwLjkyMTg3LTM3Ljc5Ny0wLjE4MDc2LTcuMTc2MiAwLjYxNDU5LTE0LjQ0My0wLjY1MDczLTIxLjUyOS0wLjk5NDE5LTQuODQ0NC02LjkwNS00LjU3MzItMTAuNjI5LTUuNTMxMyAwLTEuMTIwNy0wLjAxODEtMy4zNjIxLTAuMDE4MS00LjQ4Mjl6Ii8+CiAgPHBhdGggZD0ibTUyMC40NiA5MS4zNDRjMTAuMTIzLTAuMTQ0NjEgMjAuMjQ1LTEuNTE4NCAyOS44NjItNC43NTRsMC4yNzExNCA3LjQ0NzNjOS43MjQ5LTcuODI2OSAyNC4zODUtOS44MTUzIDM0Ljc0Mi0yLjA2MDdsLTEwLjggMTYuNDg0Yy01LjA0MzItNy43NzI3LTE1LjI3NC05LjY1MjYtMjMuMzU0LTUuNjk0IDAgMC0wLjA1NDIgMzQuMjE4IDAuMDU0MiA1MS4zMTggMC40MTU3NCAzLjgxNC0wLjE4MDc2IDguNzY2OSAzLjM5ODMgMTEuMjYxIDMuNDUyNSAyLjAyNDUgNy42NDYyIDEuOTE2MSAxMS40OTYgMi41MzA2IDAgMS4xNzQ5LTAuMDE4MSAzLjU2MS0wLjAxODEgNC43MzU5LTE1LjUyNy0xLjA0ODQtMzEuMDkxLTEuMjY1My00Ni42MTgtMC4wMzYybC0wLjAwMy00LjY5OTZjNS4wMDUyLTAuODUzNTEgMTAuMjE2LTIuNTg1IDEwLjk3NS01LjU2NzYgMi4xNTEtNy4zNTY5IDEuMTAyNi0xNS4xNDggMS4zMTk2LTIyLjcyMi0wLjIxNjkyLTEyLjA1NyAwLjQzMzgyLTI0LjEzMi0wLjI4OTIyLTM2LjE3LTAuMDU0Mi01Ljg1NjYtNi42ODgxLTYuMzgwOC0xMC45OS03LjIzMDQgMC4wMDctMS42NjAxLTAuMDI5MS0zLjM2NDgtMC4wMzU4LTQuODQ0M3oiLz4KIDwvZz4KPC9zdmc+Cg==" alt="Stanford" width="143" height="30"></div><div><b>Statistical Learning</b><span>Stanford Online</span></div></div>
+        <div class="proof"><div class="plate"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE3LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhbHF1ZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjEwMHB4IiBoZWlnaHQ9IjE3LjkzM3B4IiB2aWV3Qm94PSIwIDAgMTAwIDE3LjkzMyIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDE3LjkzMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxwYXRoIGQ9Ik05Ny41MzQsNi45NzRoLTQuNTA4djMuMzYzaDQuNTA4VjYuOTc0eiBNMTAwLDAuMjQ5aC02Ljk3NHYzLjM2M0gxMDBWMC4yNDl6IE05Mi41MjgsMC4yNDloLTMuNjEydjE3LjQzNWgzLjYxMlYwLjI0OXogICBNNzkuNzAxLDAuMjQ5aC0zLjYxMnY3Ljg0NmwxLjI0NSwzLjI2M2MwLjYyMywxLjY0NCwxLjI5NSwyLjM0MSwyLjM2NiwyLjM0MVYwLjI0OXogTTcyLjEwNCwxNy42ODRWOS44MzhsLTEuMjQ1LTMuMzEzICBjLTAuNjIzLTEuNjQ0LTEuMjk1LTIuMjkxLTIuMzY2LTIuMjkxdjEzLjQ1SDcyLjEwNHogTTc5LjcwMSwxNy42ODR2LTMuNDg3Yy0wLjg3MiwwLTEuOTY4LTAuMzI0LTIuNzQtMi4zNjZMNzIuNjAyLDAuMjQ5aC00LjExICB2My40ODdjMC44NzIsMCwxLjk2OCwwLjI5OSwyLjc0LDIuMzY2bDQuMzU5LDExLjU4Mkg3OS43MDF6IE01OS45ODksMTQuNTcxYy0xLjAyMSwwLTEuNzQ0LTAuODQ3LTEuNzQ0LTEuODY4VjUuMjMxICBjMC0xLjAyMSwwLjcyMi0xLjg2OCwxLjc0NC0xLjg2OFYwYy0yLjkzOSwwLTUuMzU1LDIuMjkxLTUuMzU1LDUuMjMxdjcuNDcyYzAsMi45MzksMi40MTYsNS4yMzEsNS4zNTUsNS4yMzFWMTQuNTcxeiBNNjUuODQyLDUuMjMxICBDNjUuODQyLDIuMjkxLDYzLjQyNiwwLDYwLjQ4NywwdjMuMzYzYzEuMDIxLDAsMS43NDQsMC44NDcsMS43NDQsMS44Njh2Ny40NzJjMCwxLjAyMS0wLjcyMiwxLjg2OC0xLjc0NCwxLjg2OHYzLjM2MyAgYzIuOTM5LDAsNS4zNTUtMi4yOTEsNS4zNTUtNS4yMzFWNS4yMzF6IE01MS45ODIsMC4yNDlINDguMzd2MTcuNDM1aDMuNjEyVjAuMjQ5eiBNNDYuMTQzLDAuMjQ5SDM1LjE1OXYzLjM2M2gxMC45ODRWMC4yNDl6ICAgTTQyLjQ1Nyw0LjExaC0zLjYxMnYxMy41NzVoMy42MTJWNC4xMXogTTMwLjY2OSwxNS41NDJsLTAuNjQ4LTIuOTE0aC0yLjE5MmwxLjEyMS00LjgzMmMtMC40OTgtMi4wNDItMS4yNDUtMy41ODctMi43NjUtMy41ODcgIGwtMy4xMzgsMTMuNDc1aDMuNjM2bDAuNDk4LTIuMTQySDMwLjY2OXogTTM1LjMwMSwxNy42ODRsLTQuMDYtMTcuNDM1aC00LjEzNUwyNi4zMSwzLjczNmMxLjA0NiwwLDIuMzQxLDAuNjIzLDMuMDM5LDMuNzExICBsMi4zMTYsMTAuMjM3SDM1LjMwMXogTTIzLjI0NCwwLjI0OUgxMi4yNnYzLjM2M2gxMC45ODRWMC4yNDl6IE0xOS41NTgsNC4xMWgtMy42MTJ2MTMuNTc1aDMuNjEyVjQuMTF6IE0xMC45NTksNC45ODIgIEMxMC44MzUsMS45OTMsOC42NDMsMCw1Ljg1MywwdjMuMzYzQzYuNywzLjM4Nyw3LjM0OCw0LjEzNSw3LjM0OCw1LjIzMUwxMC45NTksNC45ODJ6IE01LjM1NSwxNC41NzEgIGMtMC45OTYtMC4wMjUtMS43NDQtMC45MjItMS43NDQtMS44NjhMMCwxMi44NzdjMC4xLDIuOTY0LDIuMzkxLDUuMDU2LDUuMzU1LDUuMDU2VjE0LjU3MXogTTUuODUzLDE3LjkzMyAgYzIuOTY0LDAsNS40OC0yLjMxNiw1LjQ4LTUuMzA1YzAtMi40NDEtMS4xNzEtNC4xMzUtMy40MzctNC44ODJDNy4yOTgsNy41NDcsNS45MjgsNy4wNDksNS40MDUsNi44NSAgQzQuNjA4LDYuNTUxLDMuODM2LDYuMDc3LDMuODM2LDUuMDMxYzAtMS4xNDYsMC44MjItMS42NDQsMS41MTktMS42NjlWMGMtMi43NCwwLTUuMTU2LDIuMDQyLTUuMTU2LDUuMDgxICBjMCwyLjAxOCwxLjAyMSw0LjA4NSwzLjYxMiw0Ljk4MmMwLjYyMywwLjIyNCwxLjI5NSwwLjQ3MywyLjA2NywwLjc3MmMxLjA0NiwwLjM5OSwxLjcxOSwwLjk5NiwxLjcxOSwxLjkxOCAgYzAsMS4xNDYtMC43MjIsMS43OTMtMS43NDQsMS44MThWMTcuOTMzeiIvPgo8L3N2Zz4=" alt="Station F" width="168" height="30"></div><div><b data-t="proof3_t"></b><span data-t="proof3_s"></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="writing">
+    <div class="in">
+      <p class="mono lab kick" data-t="writ_kick"></p>
+      <h2 data-t="writ_h2"></h2>
+      <p class="lead" data-t="writ_h2b"></p>
+      <div id="home-notes"></div>
+      <p style="margin:18px 0 0"><a class="mono ul p-l" href="#blog"><span data-t="writ_all"></span>&nbsp;<span id="all-count"></span></a></p>
+    </div>
+  </section>
+
+  <section class="end" id="contact">
+    <div class="in">
+      <p class="mono lab kick" data-t="contact_kick"></p>
+      <h2 data-t="contact_h2"></h2>
+      <span class="mail" id="mail">yvankondjo8@gmail.com</span>
+      <div class="row mono"><span class="mut" id="mail-note" data-t="tap_copy"></span><a class="ul" href="https://linkedin.com/in/jacob-kondjo">LinkedIn ↗</a><a class="ul" href="https://github.com/yvankondjo">GitHub ↗</a></div>
+    </div>
+  </section>
+</main>
+
+<main class="view" id="v-blog" hidden>
+  <div class="in blog-head">
+    <p class="mono lab kick" data-t="writ_kick"></p>
+    <h1 data-t="blog_h1"></h1>
+    <p class="lead" data-t="blog_lead"></p>
+  </div>
+  <div class="in">
+    <div class="filters">
+      <div class="seg mono" role="group" aria-label="Group"><button type="button" data-by="theme"></button><button type="button" data-by="project"></button></div>
+      <div class="fchips" id="fchips" role="group" aria-label="Filter"></div>
+      <div class="sortrow mono"><span class="mut" id="ncount"></span><span class="sorts"><span class="mut" id="sort-l"></span><button type="button" class="sortb" data-sort="feat"></button><button type="button" class="sortb" data-sort="short"></button></span></div>
+    </div>
+    <div class="notes" id="blog-notes"></div>
+  </div>
+</main>
+
+<main class="view" id="v-post" hidden>
+  <article class="in art" id="post"></article>
+</main>
+
+<footer><div class="in mono mut"><span>© 2026 · Jacob Kondjo · Paris <span id="clock">--:--</span></span></div></footer>
+
+<nav class="dock" aria-label="Sections">
+  <a href="#network" data-s="network" data-t="dock_network"></a>
+  <a href="#work" data-s="work" data-t="dock_work"></a>
+  <a href="#blog" data-s="blog" data-t="dock_writing"></a>
+  <a href="#contact" data-s="contact" data-t="dock_contact"></a>
+</nav>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  let C = {};
+  const colors = () => { C = {ink:css("--ink"), accent:css("--accent"), paper:css("--paper")}; };
+  colors();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", colors);
+  new MutationObserver(colors).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme","data-palette"]});
+
+  /* ---------------- Textes ---------------- */
+  const T = {
+    en: {
+      nav_work:"Work", nav_writing:"Writing", nav_contact:"Contact", colour:"Colour",
+      dock_network:"Network", dock_work:"Work", dock_writing:"Writing", dock_contact:"Contact",
+      hero_say:"I build systems that learn, <i>then I put them in front of real people.</i>",
+      cta_work:"See the work", cta_contact:"Get in touch",
+      legend:"Behind this text: 40 concepts from my craft. The crosshair follows your finger or cursor, or wanders on its own, and links the closest ones. Cosine computed live.",
+      net_kick:"My work as a network", net_h2:"What I know, <i>and what I shipped with it.</i>",
+      net_lead:"Three layers, like a neural net: domains, technologies, shipped work. A line exists only if the technology actually ran in the project.",
+      l1:"Layer 1 · Domains", l2:"Layer 2 · Technologies", l3:"Output · Work", hint:"Tap a box. The path lights up.",
+      cap_d:"Domains", cap_s:"Technologies", cap_p:"Work",
+      p_auto:"Auto-play", p_pick:"Your pick", k_work:"Work", k_domain:"Domain", k_skill:"Technology", stack:"Stack",
+      nn_h:"Closest work", cos:"cosine", code:"Code ↗", see:"See the project ↗", all_work:"All work ↓",
+      used_in:n => `Used in ${n} ${n > 1 ? "projects" : "project"}`, used_list:"Used in: ",
+      work_kick:"Work", work_h2:"What I built, <i>and what it changed.</i>", work_lead:"Four projects in production or award-winning.",
+      swipe:"Slides on its own · swipe →", oss:"Open source ↗", gpt2_name:"GPT-2 from the paper",
+      proof_kick:"Proof", proof_h2:"What you can verify.",
+      proof3_t:"1st place, Voice AI Hackathon", proof3_s:"OpenAI × AI Collective · Station F · March 2026",
+      writ_kick:"Writing", writ_h2:"Notes from production.", writ_all:"All notes →", writ_h2b:"The ones I would start with.",
+      blog_h1:"Notes from <i>production.</i>",
+      blog_lead:"Short field notes on training models and shipping agents. What worked, what broke, what I would do again.",
+      contact_kick:"Contact", contact_h2:"A model to train, an agent to ship? <i>Let's talk.</i>",
+      tap_copy:"Tap to copy", copied:"Copied",
+      back:"← All notes", draft:"Draft", min:"min read", next:"Next note", soon:"Coming soon", by_theme:"By theme", by_project:"By project", all:"All", sort:"Sort", s_feat:"Featured", s_short:"Shortest", n_notes:n => `${n} ${n > 1 ? "notes" : "note"}`, series:"Series", part:"Part", featured:"Featured", empty:"Nothing here yet."
+    },
+    fr: {
+      nav_work:"Travaux", nav_writing:"Écrits", nav_contact:"Contact", colour:"Couleur",
+      dock_network:"Réseau", dock_work:"Travaux", dock_writing:"Écrits", dock_contact:"Écrire",
+      hero_say:"Je construis des systèmes qui apprennent, <i>puis je les mets devant de vraies personnes.</i>",
+      cta_work:"Voir le travail", cta_contact:"Me contacter",
+      legend:"Derrière ce texte, 40 concepts de mon métier. La croix suit votre doigt ou votre curseur, ou se promène seule, et relie les plus proches. Cosinus calculé en direct.",
+      net_kick:"Mon travail comme un réseau", net_h2:"Ce que je sais, <i>et ce que j'en ai fait.</i>",
+      net_lead:"Trois couches, comme un réseau de neurones : domaines, technologies, travaux livrés. Un trait n'existe que si la technologie a vraiment servi dans le projet.",
+      l1:"Couche 1 · Domaines", l2:"Couche 2 · Technologies", l3:"Sortie · Travaux", hint:"Touchez une case. Le chemin s'allume.",
+      cap_d:"Domaines", cap_s:"Technologies", cap_p:"Travaux",
+      p_auto:"Lecture automatique", p_pick:"Votre sélection", k_work:"Travail", k_domain:"Domaine", k_skill:"Technologie", stack:"Stack",
+      nn_h:"Travaux les plus proches", cos:"cosinus", code:"Code ↗", see:"Voir le projet ↗", all_work:"Tous les travaux ↓",
+      used_in:n => `Utilisée dans ${n} ${n > 1 ? "travaux" : "travail"}`, used_list:"Utilisée dans : ",
+      work_kick:"Travaux", work_h2:"Ce que j'ai construit, <i>et ce que ça a changé.</i>", work_lead:"Quatre projets en production ou primés.",
+      swipe:"Défile seul · glissez →", oss:"Open source ↗", gpt2_name:"GPT-2 depuis le papier",
+      proof_kick:"Preuves", proof_h2:"Ce qui se vérifie.",
+      proof3_t:"1<sup>re</sup> place, Voice AI Hackathon", proof3_s:"OpenAI × AI Collective · Station F · mars 2026",
+      writ_kick:"Écrits", writ_h2:"Notes de production.", writ_all:"Tous les écrits →", writ_h2b:"Celles par lesquelles je commencerais.",
+      blog_h1:"Notes de <i>production.</i>",
+      blog_lead:"Des notes de terrain, courtes, sur l'entraînement de modèles et la mise en production d'agents. Ce qui a marché, ce qui a cassé, ce que je referais.",
+      contact_kick:"Écrire", contact_h2:"Un modèle à entraîner, un agent à livrer ? <i>Parlons-en.</i>",
+      tap_copy:"Touchez pour copier", copied:"Adresse copiée",
+      back:"← Tous les écrits", draft:"Brouillon", min:"min de lecture", next:"Note suivante", soon:"Bientôt", by_theme:"Par thème", by_project:"Par projet", all:"Tout", sort:"Trier", s_feat:"À la une", s_short:"Plus courtes", n_notes:n => `${n} ${n > 1 ? "notes" : "note"}`, series:"Série", part:"Partie", featured:"À la une", empty:"Rien ici pour l'instant."
+    }
+  };
+
+  /* ---------------- Données ---------------- */
+  const D = [
+    {id:"nn", t:{en:"Neural networks", fr:"Réseaux de neurones"}, s:{en:"Neural nets", fr:"Neurones"},
+     d:{en:"Transformers, fine-tuning, embeddings. I understand a model well enough to rewrite it.", fr:"Transformers, fine-tuning, embeddings. Je comprends un modèle assez pour le réécrire."}},
+    {id:"ag", t:{en:"AI agents", fr:"Agents IA"}, s:{en:"Agents", fr:"Agents"},
+     d:{en:"Text or voice agents that answer, act in your tools, and hand off when they are not sure.", fr:"Des agents texte ou voix qui répondent, agissent dans vos outils et passent la main quand ils doutent."}},
+    {id:"re", t:{en:"Search and RAG", fr:"Recherche et RAG"}, s:{en:"Search", fr:"Recherche"},
+     d:{en:"Vectors and full text fused, measured with MRR and Recall. An answer is only as good as the source it finds.", fr:"Vecteurs et plein texte fusionnés, mesurés en MRR et Recall. Une réponse ne vaut que la source qu'elle retrouve."}},
+    {id:"in", t:{en:"Infrastructure", fr:"Infrastructure"}, s:{en:"Infra", fr:"Infra"},
+     d:{en:"Terraform, Cloud Run, Docker. If it can't be redeployed from a commit, it doesn't exist.", fr:"Terraform, Cloud Run, Docker. Ce qu'on ne peut pas redéployer d'un commit n'existe pas."}}
+  ];
+  const S = [
+    {id:"pytorch", t:"PyTorch", up:["nn"]}, {id:"transf", t:"Transformers", up:["nn"]}, {id:"ft", t:"Fine-tuning", up:["nn"]},
+    {id:"emb", t:"Embeddings", up:["nn","re"]}, {id:"lg", t:"LangGraph", up:["ag"]}, {id:"mcp", t:"MCP", up:["ag"]},
+    {id:"livekit", t:"LiveKit", up:["ag"]}, {id:"eval", t:{en:"Evaluation", fr:"Évaluation"}, up:["ag","re"]}, {id:"pgv", t:"pgvector", up:["re"]},
+    {id:"rrf", t:{en:"RRF fusion", fr:"Fusion RRF"}, up:["re"]}, {id:"vertex", t:"Vertex AI", up:["re","in"]}, {id:"bq", t:"BigQuery", up:["in"]},
+    {id:"fastapi", t:"FastAPI", up:["ag","in"]}, {id:"docker", t:"Docker", up:["in"]}, {id:"tf", t:"Terraform", up:["in"]}, {id:"run", t:"Cloud Run", up:["in"]}
+  ];
+  const P = [
+    {id:"galileo", s:"Galileo", t:{en:"Admissions agent", fr:"Agent d'admissions"}, org:"Galileo Global Education", y:"2026",
+     st:{en:"In production", fr:"En production"},
+     q:{en:"How do you answer 300,000 visitors a year without losing a counselor's nuance?", fr:"Comment répondre à 300 000 visiteurs par an sans perdre la nuance d'un conseiller ?"},
+     d:{en:"A LangGraph agent with RAG and MCP. It answers admissions for three schools and qualifies leads straight into Salesforce. Built to scale to 60+ campuses.", fr:"Un agent LangGraph, RAG et MCP. Il répond aux admissions de trois écoles et qualifie les demandes directement dans Salesforce. Conçu pour passer à plus de 60 campus."},
+     m:["300k+", {en:"visitors a year", fr:"visiteurs par an"}], up:["lg","mcp","emb","eval","fastapi","docker","tf"]},
+    {id:"ansio", s:"Ansio", t:{en:"Ansio", fr:"Ansio"}, org:{en:"Personal project", fr:"Projet personnel"}, y:"2025 —",
+     st:{en:"Live", fr:"En ligne"}, link:"https://ansio.io",
+     q:{en:"When should a machine hand over to a human?", fr:"Quand une machine doit-elle passer la main à un humain ?"},
+     d:{en:"Designed and built end to end. Instagram, Messenger and WhatsApp wired to a store's FAQ and catalog. Hybrid retrieval, and a clean handoff to a person when confidence drops.", fr:"Conçu et construit de bout en bout. Instagram, Messenger et WhatsApp reliés à la FAQ et au catalogue d'une boutique. Recherche hybride, et passage de main propre à une personne quand la confiance baisse."},
+     m:["−80%", {en:"support time", fr:"de temps de support"}], up:["lg","pgv","rrf","emb","fastapi","run","docker"]},
+    {id:"medvoice", s:"MedVoice", t:{en:"MedVoice", fr:"MedVoice"}, org:"Voice AI Hackathon · Station F", y:"03.2026",
+     st:{en:"1st place", fr:"1re place"}, link:"https://github.com/yvankondjo/HacKMed",
+     q:{en:"What can you build right in 48 hours?", fr:"Que peut-on construire de juste en 48 heures ?"},
+     d:{en:"A clinical voice agent. It takes the call, books the slot, transcribes the visit, drafts the prescription and calls back. First of 16 teams, selected by Station F.", fr:"Un agent vocal clinique. Il prend l'appel, réserve le créneau, transcrit la consultation, rédige l'ordonnance et rappelle. Premier sur 16 équipes, sélectionné par Station F."},
+     m:["1st", {en:"of 16 teams", fr:"sur 16 équipes"}], mfr:"1re", up:["livekit","mcp","fastapi","docker"]},
+    {id:"renault", s:"Renault", t:{en:"After-sales search", fr:"Recherche après-vente"}, org:"Renault Group", y:"2023 — 25",
+     st:{en:"1,000+ users", fr:"1 000+ utilisateurs"},
+     q:{en:"How do you find the right page among thousands, in 27 languages?", fr:"Comment retrouver la bonne page parmi des milliers, dans 27 langues ?"},
+     d:{en:"Hybrid search on Vertex AI for 1,000+ technicians. Fine-tuned translation across 26,000 documents. 200,000 complaints classified automatically.", fr:"Recherche hybride sur Vertex AI pour plus de 1 000 techniciens. Traduction affinée sur 26 000 documents. 200 000 réclamations classées automatiquement."},
+     m:["+35%", {en:"precision, −60% latency", fr:"de précision, −60 % de latence"}], up:["vertex","emb","ft","transf","bq","eval"]},
+    {id:"ragbench", s:"RAGBench", t:{en:"RAGBench-12x", fr:"RAGBench-12x"}, org:"Open source", y:"2026", st:{en:"Open source", fr:"Open source"}, link:"https://github.com/yvankondjo/Ragbench",
+     q:{en:"Which RAG should you pick, and how do you know without guessing?", fr:"Quel RAG choisir, et comment le savoir sans deviner ?"},
+     d:{en:"Twelve RAG variants on the same data and the same metrics. Reproducible end to end.", fr:"Douze variantes de RAG sur les mêmes données et les mêmes métriques. Reproductible de bout en bout."},
+     m:["12", {en:"variants compared", fr:"variantes comparées"}], up:["emb","eval"]},
+    {id:"vertexops", s:"VertexOps", t:{en:"VertexOps Pipeline", fr:"VertexOps Pipeline"}, org:"Open source", y:"2026", st:{en:"Open source", fr:"Open source"}, link:"https://github.com/yvankondjo/VertexOps-Pipeline",
+     q:{en:"What does it take for a model to actually be served?", fr:"Que faut-il pour qu'un modèle soit vraiment servi ?"},
+     d:{en:"MLOps end to end on Google Cloud: Airflow, dbt, BigQuery, a Vertex AI endpoint.", fr:"MLOps de bout en bout sur Google Cloud : Airflow, dbt, BigQuery, un endpoint Vertex AI."},
+     m:["6", {en:"steps to the endpoint", fr:"étapes jusqu'à l'endpoint"}], up:["vertex","bq","docker"]},
+    {id:"gpt2", s:"GPT-2", t:{en:"GPT-2 from the paper", fr:"GPT-2 depuis le papier"}, org:{en:"Study", fr:"Étude"}, y:"2025", st:{en:"Open source", fr:"Open source"}, link:"https://github.com/yvankondjo/GPT2",
+     q:{en:"Can you understand attention without writing it yourself?", fr:"Peut-on comprendre l'attention sans l'écrire soi-même ?"},
+     d:{en:"A decoder transformer rebuilt piece by piece in PyTorch.", fr:"Un transformer décodeur reconstruit pièce par pièce en PyTorch."},
+     m:["0 → 1", {en:"from a blank page", fr:"depuis une page blanche"}], up:["pytorch","transf"]}
+  ];
+  const POSTS = [
+    {slug:"evaluate-agent", min:4, tag:{en:"Agents", fr:"Agents"},
+     t:{en:"Evaluate an agent before it talks to 300,000 people", fr:"Évaluer un agent avant qu'il parle à 300 000 personnes"},
+     sum:{en:"The test set is the spec. Notes from shipping an admissions agent.", fr:"Le jeu de test, c'est la spécification. Notes sur un agent d'admissions."},
+     body:{en:[
+       "An admissions agent doesn't get a second first impression. Three schools, 300,000 visitors a year, and every wrong answer lands on a student deciding where to spend the next five years.",
+       "So evaluation came before launch, not after. I ran experiments in Langfuse on real admissions questions and scored each model with an LLM judge on two things: is the answer right, and did it invent anything.",
+       "The judge is a tool, not an oracle. Its rubric is written down, versioned, and checked against human reading on a sample. When the judge and a human disagree, the rubric changes.",
+       "|Write the questions before the prompts. The test set is the spec.",
+       "Then evaluation keeps running in production. Traces, latency and token cost sit next to answer quality. A model swap that is cheaper but hallucinates more doesn't ship."
+     ], fr:[
+       "Un agent d'admissions n'a pas de seconde chance de faire bonne impression. Trois écoles, 300 000 visiteurs par an, et chaque mauvaise réponse tombe sur un étudiant qui choisit où passer ses cinq prochaines années.",
+       "L'évaluation est donc venue avant le lancement, pas après. J'ai lancé des expériences dans Langfuse sur de vraies questions d'admission, et chaque modèle a été noté par un LLM juge sur deux points : la réponse est-elle juste, et a-t-il inventé quelque chose ?",
+       "Le juge est un outil, pas un oracle. Sa grille est écrite, versionnée, et comparée à une lecture humaine sur un échantillon. Quand le juge et l'humain ne sont pas d'accord, c'est la grille qui change.",
+       "|Écrivez les questions avant les prompts. Le jeu de test, c'est la spécification.",
+       "Ensuite, l'évaluation continue en production. Traces, latence et coût en tokens sont à côté de la qualité des réponses. Un modèle moins cher qui hallucine davantage ne part pas en production."
+     ]}},
+    {slug:"hand-off", min:3, tag:{en:"Agents", fr:"Agents"},
+     t:{en:"Knowing when to hand off", fr:"Savoir passer la main"},
+     sum:{en:"The most useful thing a support agent can say is: let me get you a person.", fr:"La phrase la plus utile d'un agent de support : je vous passe quelqu'un."},
+     body:{en:[
+       "The most useful sentence a support agent can say is: let me get you a person.",
+       "Ansio answers on Instagram, Messenger and WhatsApp from a store's FAQ and catalog. Retrieval is hybrid: pgvector for meaning, full text for exact words like a product reference, fused with RRF. I measured it with MRR and Recall before trusting it.",
+       "But retrieval isn't the product. The handoff is. When the agent isn't confident, it doesn't guess. It passes the conversation to a human, with the context already gathered.",
+       "|An agent that knows its limits earns more trust than one that never says no.",
+       "That's how support time dropped by 80% for the first e-commerce stores using it: not by answering everything, but by answering what it could and routing the rest cleanly."
+     ], fr:[
+       "La phrase la plus utile qu'un agent de support puisse dire : je vous passe quelqu'un.",
+       "Ansio répond sur Instagram, Messenger et WhatsApp à partir de la FAQ et du catalogue d'une boutique. La recherche est hybride : pgvector pour le sens, le plein texte pour les mots exacts comme une référence produit, le tout fusionné avec RRF. Je l'ai mesurée en MRR et Recall avant de lui faire confiance.",
+       "Mais la recherche n'est pas le produit. Le passage de main, si. Quand l'agent n'est pas sûr, il ne devine pas. Il transmet la conversation à une personne, avec le contexte déjà rassemblé.",
+       "|Un agent qui connaît ses limites inspire plus confiance qu'un agent qui ne dit jamais non.",
+       "C'est comme ça que le temps de support a baissé de 80 % pour les premières boutiques qui l'utilisent : pas en répondant à tout, mais en répondant à ce qu'il savait et en orientant proprement le reste."
+     ]}},
+    {slug:"twelve-rags", min:4, tag:{en:"RAG", fr:"RAG"},
+     t:{en:"Twelve RAGs, one question", fr:"Douze RAG et une seule question"},
+     sum:{en:"The most elaborate setup didn't win. What a reproducible benchmark taught me.", fr:"Le montage le plus sophistiqué n'a pas gagné. Ce qu'un banc d'essai reproductible m'a appris."},
+     body:{en:[
+       "Which RAG should you use? Most teams answer with a blog post. I wanted an answer I could rerun.",
+       "RAGBench-12x crosses three choices: simple or agentic orchestration; dense, keyword or hybrid retrieval; with or without a reranker. Twelve configurations, same data, same metrics: NDCG, Recall, MRR, faithfulness, answer relevance.",
+       "The result I didn't expect: the most elaborate setup didn't win. Simple orchestration with dense retrieval and a reranker tied for the best NDCG@10, at 0.852. Agentic hybrid with reranking came close at 0.845, with more latency and more moving parts.",
+       "Keyword-only search ranked worst, yet had the highest faithfulness, at 0.884. Different metrics, different winners.",
+       "|The lesson isn't a configuration. It's a habit: measure on your data, keep the run reproducible, and write down what the benchmark doesn't prove."
+     ], fr:[
+       "Quel RAG utiliser ? La plupart des équipes répondent avec un article de blog. Je voulais une réponse que je pouvais rejouer.",
+       "RAGBench-12x croise trois choix : orchestration simple ou agentique ; recherche dense, par mots-clés ou hybride ; avec ou sans reranker. Douze configurations, mêmes données, mêmes métriques : NDCG, Recall, MRR, fidélité, pertinence des réponses.",
+       "Le résultat que je n'attendais pas : le montage le plus sophistiqué n'a pas gagné. L'orchestration simple avec recherche dense et reranker est à égalité pour le meilleur NDCG@10, à 0,852. L'hybride agentique avec reranking suit de près à 0,845, avec plus de latence et plus de pièces mobiles.",
+       "La recherche par mots-clés seule classe le moins bien, mais a la meilleure fidélité, à 0,884. Autres métriques, autres gagnants.",
+       "|La leçon n'est pas une configuration. C'est une habitude : mesurer sur ses données, garder l'expérience rejouable, et écrire ce que le banc d'essai ne prouve pas."
+     ]}}
+  ];
+  const THEMES = {
+    agents:{en:"Agents", fr:"Agents"}, rag:{en:"Search & RAG", fr:"Recherche et RAG"}, eval:{en:"Evaluation", fr:"Évaluation"},
+    deep:{en:"Deep learning", fr:"Deep learning"}, infra:{en:"Infra & MLOps", fr:"Infra et MLOps"}, voice:{en:"Voice", fr:"Voix"}
+  };
+  const SERIES = {ship:{en:"Shipping agents", fr:"Mettre des agents en production"}};
+  Object.assign(POSTS[0], {themes:["agents","eval"], project:"galileo", featured:true, series:"ship", part:1, status:"draft"});
+  Object.assign(POSTS[1], {themes:["agents","rag"], project:"ansio", featured:true, series:"ship", part:2, status:"draft"});
+  Object.assign(POSTS[2], {themes:["rag","eval"], project:"ragbench", featured:true, status:"draft"});
+  POSTS.push(
+    {slug:"medvoice-48h", status:"soon", min:5, themes:["agents","voice"], project:"medvoice", series:"ship", part:3,
+     t:{en:"48 hours, one voice agent", fr:"48 heures, un agent vocal"},
+     sum:{en:"What we cut to win a hackathon, and why the cuts mattered more than the features.", fr:"Ce qu'on a coupé pour gagner un hackathon, et pourquoi les coupes ont compté plus que les fonctions."}},
+    {slug:"27-languages", status:"soon", min:7, themes:["rag","deep"], project:"renault",
+     t:{en:"Searching in 27 languages", fr:"Chercher dans 27 langues"},
+     sum:{en:"Hybrid search and fine-tuned translation for 1,000+ technicians. Precision first, then speed.", fr:"Recherche hybride et traduction affinée pour plus de 1 000 techniciens. La précision d'abord, la vitesse ensuite."}},
+    {slug:"gpt2-attention", status:"soon", min:10, themes:["deep"], project:"gpt2",
+     t:{en:"Rewriting GPT-2 to understand attention", fr:"Réécrire GPT-2 pour comprendre l'attention"},
+     sum:{en:"Causal masks, Flash Attention, and what the paper leaves out.", fr:"Masques causaux, Flash Attention, et ce que le papier ne dit pas."}},
+    {slug:"served-model", status:"soon", min:6, themes:["infra"], project:"vertexops",
+     t:{en:"A model only exists once it's served", fr:"Un modèle n'existe que lorsqu'il est servi"},
+     sum:{en:"From Airflow to a Vertex AI endpoint, and the steps most teams skip.", fr:"D'Airflow à un endpoint Vertex AI, et les étapes que la plupart des équipes sautent."}}
+  );
+  let lang = "en";
+  const L = v => (v && typeof v === "object" && !Array.isArray(v)) ? (v[lang] ?? v.en) : v;
+  const tx = k => T[lang][k];
+
+  const all = {}; [...D, ...S, ...P].forEach(n => all[n.id] = n);
+  const DI = D.map(d => d.id);
+  D.forEach((d, i) => d.v = DI.map((_, k) => k === i ? 1 : 0));
+  S.forEach(s => s.v = DI.map(k => s.up.includes(k) ? 1 : 0));
+  P.forEach(p => { p.v = [0, 0, 0, 0]; p.up.forEach(id => all[id].v.forEach((x, k) => p.v[k] += x)); });
+  const norm = v => Math.hypot(...v) || 1;
+  const cos = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0) / (norm(a) * norm(b));
+
+  /* ---------------- Horloge, e-mail ---------------- */
+  const f1 = new Intl.DateTimeFormat("fr-FR", {timeZone:"Europe/Paris", hour:"2-digit", minute:"2-digit"});
+  const tick = () => { $("clock").textContent = f1.format(new Date()); };
+  tick(); setInterval(tick, 20000);
+  $("mail").addEventListener("click", () => {
+    try { navigator.clipboard.writeText($("mail").textContent).then(() => { $("mail-note").textContent = tx("copied"); }, () => {}); } catch (e) {}
+  });
+
+  /* ---------------- Réseau (ordinateur) ---------------- */
+  const svg = $("graph"), NS = "http://www.w3.org/2000/svg";
+  let edges = [], compact = null;
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const layout = (arr, x, a, b) => arr.forEach((n, i) => { n.x = x; n.y = a + (b - a) * (arr.length === 1 ? .5 : i / (arr.length - 1)); });
+  function draw(force){
+    const isCompact = svg.parentNode.clientWidth < 620;
+    if (isCompact === compact && !force) return;
+    compact = isCompact; svg.innerHTML = ""; edges = [];
+    Object.values(all).forEach(n => n.el = null);
+    if (!compact) {
+      svg.setAttribute("viewBox", "0 0 800 560");
+      layout(D, 175, 90, 470); layout(S, 378, 20, 540); layout(P, 566, 40, 520);
+      S.forEach(s => s.up.forEach(u => edges.push({a:u, b:s.id})));
+      P.forEach(p => p.up.forEach(u => edges.push({a:u, b:p.id})));
+    } else {
+      svg.setAttribute("viewBox", "0 0 340 380");
+      layout(D, 130, 50, 330); layout(P, 196, 18, 362);
+      P.forEach(p => DI.forEach((d, k) => { if (p.v[k] > 0) edges.push({a:d, b:p.id}); }));
+    }
+    const gE = mk("g", {}, svg);
+    edges.forEach(e => { const a = all[e.a], b = all[e.b], m = (a.x + b.x) / 2; e.el = mk("path", {d:`M${a.x + 6} ${a.y} C${m} ${a.y} ${m} ${b.y} ${b.x - 6} ${b.y}`}, gE); });
+    const node = (n, kind) => {
+      const g = mk("g", {class:"node " + (kind === "s" ? "small" : "big"), tabindex:"0", role:"button", "aria-label":L(n.t)}, svg); g.dataset.id = n.id;
+      const label = compact ? L(n.s) : L(n.t);
+      if (kind === "s") mk("rect", {x:n.x + 8, y:n.y - 9, width:label.length * 7 + 8, height:18, fill:"var(--paper)"}, g);
+      mk("circle", {class:"hit", cx:n.x, cy:n.y, r:kind === "s" ? 11 : 20}, g);
+      mk("circle", {class:"dot", cx:n.x, cy:n.y, r:kind === "s" ? 4 : 5.5}, g);
+      const t = mk("text", kind === "d" ? {x:n.x - 14, y:n.y + 6, "text-anchor":"end"} : {x:n.x + 13, y:n.y + (kind === "s" ? 4 : 6)}, g);
+      t.textContent = label; n.el = g;
+    };
+    D.forEach(n => node(n, "d")); if (!compact) S.forEach(n => node(n, "s")); P.forEach(n => node(n, "p"));
+    if (current) select(current, manualUntil > Date.now(), true);
+  }
+  function reach(id, list){
+    const ids = new Set([id]), es = new Set();
+    const up = x => list.forEach(e => { if (e.b === x) { es.add(e); if (!ids.has(e.a)) { ids.add(e.a); up(e.a); } } });
+    const down = x => list.forEach(e => { if (e.a === x) { es.add(e); if (!ids.has(e.b)) { ids.add(e.b); down(e.b); } } });
+    up(id); down(id); return {ids, es};
+  }
+
+  /* ---------------- Réseau en couches (téléphone) ---------------- */
+  const full = [];
+  S.forEach(x => x.up.forEach(u => full.push({a:u, b:x.id})));
+  P.forEach(x => x.up.forEach(u => full.push({a:u, b:x.id})));
+  let mchips = {}, mLit = new Set();
+  function buildChips(){
+    const row = (arr, cls) => arr.map(n => `<button class="mchip ${cls}" type="button" data-id="${n.id}">${cls === "t" ? L(n.t) : L(n.s)}</button>`).join("");
+    $("mr-d").innerHTML = row(D, "d"); $("mr-s").innerHTML = row(S, "t"); $("mr-p").innerHTML = row(P, "p");
+    mchips = {}; document.querySelectorAll(".mchip").forEach(c => mchips[c.dataset.id] = c);
+  }
+  function mlines(){
+    const box = $("mnet"), Ls = $("mlines");
+    if (!box.offsetParent) return;
+    const r0 = box.getBoundingClientRect();
+    Ls.setAttribute("viewBox", `0 0 ${r0.width} ${r0.height}`);
+    const pt = (id, bottom) => { const r = mchips[id].getBoundingClientRect(); return [r.left - r0.left + r.width / 2, (bottom ? r.bottom : r.top) - r0.top]; };
+    Ls.innerHTML = [...mLit].map(e => { const [x1, y1] = pt(e.a, true), [x2, y2] = pt(e.b, false), m = (y1 + y2) / 2; return `<path d="M${x1} ${y1} C${x1} ${m} ${x2} ${m} ${x2} ${y2}"/>`; }).join("");
+  }
+  function mselect(id){
+    const {ids, es} = reach(id, full);
+    mLit = es; $("mnet").classList.add("sel");
+    Object.entries(mchips).forEach(([k, c]) => { c.classList.toggle("on", ids.has(k) && k !== id); c.classList.toggle("me", k === id); });
+    mlines();
+  }
+  new ResizeObserver(mlines).observe($("mnet"));
+  if (document.fonts) document.fonts.ready.then(mlines);
+
+  /* ---------------- Panneau ---------------- */
+  let dimRows = [];
+  function buildDims(){
+    $("dims").innerHTML = "";
+    dimRows = D.map(d => { const r = document.createElement("div"); r.className = "dim";
+      r.innerHTML = `<span>${L(d.s)}</span><span class="tr"><i></i></span><span class="v">0.00</span>`;
+      $("dims").appendChild(r); return {r, bar:r.querySelector("i"), v:r.querySelector(".v")}; });
+  }
+  let current = null, manualUntil = 0;
+  function select(id, manual, force){
+    if (id === current && !force) return;
+    current = id; mselect(id);
+    const n = all[id], {ids, es} = reach(id, edges);
+    svg.classList.add("on");
+    edges.forEach(e => e.el.classList.toggle("lit", es.has(e)));
+    Object.values(all).forEach(x => x.el && x.el.classList.toggle("lit", ids.has(x.id)));
+    $("mode").textContent = manual ? tx("p_pick") : tx("p_auto");
+    const isP = P.includes(n), isD = D.includes(n);
+    $("kind").textContent = isP ? tx("k_work") : isD ? tx("k_domain") : tx("k_skill");
+    $("p-t").textContent = L(n.t);
+    const used = P.filter(p => p.up.includes(id)).map(p => L(p.t));
+    $("p-w").textContent = isP ? `${L(n.org)} · ${n.y}` : isD ? tx("k_domain") : tx("used_in")(used.length);
+    $("p-q").textContent = isP ? L(n.q) : isD ? L(n.d) : tx("used_list") + used.join(", ") + ".";
+    const techs = isP ? n.up.map(x => L(all[x].t)) : isD ? S.filter(x => x.up.includes(id)).map(x => L(x.t)) : [];
+    $("p-tech").innerHTML = techs.length ? `<span class="k">${tx("stack")}</span>` + techs.map(x => `<span>${x}</span>`).join("") : "";
+    const u = norm(n.v), mx = Math.max(...n.v) || 1, best = n.v.indexOf(mx);
+    dimRows.forEach((d, k) => { d.bar.style.width = (n.v[k] / mx * 100).toFixed(1) + "%"; d.v.textContent = (n.v[k] / u).toFixed(2); d.r.classList.toggle("top", k === best); });
+    const ranked = P.filter(p => p.id !== id).map(p => ({p, c:cos(n.v, p.v)})).sort((a, b) => b.c - a.c).slice(0, 2);
+    $("nn").innerHTML = ranked.map((r, i) => `<li data-id="${r.p.id}"><span class="mono mut">0${i + 1}</span><b>${L(r.p.t)}</b><span class="mono ${i ? "mut" : "lab"}">${r.c.toFixed(3)}</span></li>`).join("");
+    $("p-m").innerHTML = isP ? `<b>${lang === "fr" && n.mfr ? n.mfr : n.m[0]}</b><span>${L(n.m[1])}</span>` : "";
+    const l = $("p-l");
+    if (isP && n.link) { l.href = n.link; l.textContent = n.link.includes("github") ? tx("code") : tx("see"); }
+    else { l.href = "#work"; l.textContent = tx("all_work"); }
+  }
+  const pick = id => { manualUntil = Date.now() + 5000; select(id, true, true); };
+  svg.addEventListener("pointerover", e => { const g = e.target.closest("g.node"); if (g && e.pointerType === "mouse") pick(g.dataset.id); });
+  svg.addEventListener("click", e => { const g = e.target.closest("g.node"); if (g) pick(g.dataset.id); });
+  svg.addEventListener("focusin", e => { const g = e.target.closest("g.node"); if (g) pick(g.dataset.id); });
+  $("nn").addEventListener("click", e => { const li = e.target.closest("li"); if (li) pick(li.dataset.id); });
+  $("mnet").addEventListener("click", e => { const c = e.target.closest(".mchip"); if (c) pick(c.dataset.id); });
+  const order = P.map(p => p.id); let idx = 1;
+  if (!reduce) setInterval(() => { if (Date.now() > manualUntil && !$("v-home").hidden) select(order[idx++ % order.length], false); }, 3400);
+
+  /* ---------------- Travaux ---------------- */
+  const worksEl = $("works");
+  function buildWorks(){
+    worksEl.innerHTML = P.slice(0, 4).map(w => { const tag = w.link ? `a href="${w.link}"` : "div", end = w.link ? "a" : "div";
+      return `<${tag} class="work"><div class="top mono"><span class="lab">${L(w.org)}</span><span class="mut">${L(w.st)}</span></div><h3>${L(w.t)}</h3><p>${L(w.d)}</p><div class="k"><b>${lang === "fr" && w.mfr ? w.mfr : w.m[0]}</b><span>${L(w.m[1])}</span></div></${end}>`; }).join("");
+    $("dots").innerHTML = [...worksEl.children].map(() => "<i></i>").join("");
+    syncDots();
+  }
+  const syncDots = () => { const cards = [...worksEl.children], dots = [...$("dots").children]; if (cards.length < 2) return;
+    const i = Math.round(worksEl.scrollLeft / (cards[1].offsetLeft - cards[0].offsetLeft || 1)); dots.forEach((d, k) => d.classList.toggle("on", k === Math.min(i, cards.length - 1))); };
+  worksEl.addEventListener("scroll", syncDots, {passive:true});
+  let wPause = 0, wVisible = false;
+  ["pointerdown","touchstart","wheel","keydown"].forEach(ev => worksEl.addEventListener(ev, () => { wPause = Date.now() + 7000; }, {passive:true}));
+  new IntersectionObserver(es => { wVisible = es[0].isIntersecting; }, {threshold:.5}).observe(worksEl);
+  if (!reduce) setInterval(() => {
+    const cards = worksEl.children;
+    if (!wVisible || Date.now() < wPause || worksEl.scrollWidth <= worksEl.clientWidth + 4 || cards.length < 2) return;
+    const step = cards[1].offsetLeft - cards[0].offsetLeft;
+    worksEl.scrollTo({left:((Math.round(worksEl.scrollLeft / step) + 1) % cards.length) * step, behavior:"smooth"});
+  }, 3800);
+
+  /* ---------------- Écrits ---------------- */
+  const projName = id => { const p = P.find(x => x.id === id); return p ? L(p.s) : ""; };
+  const noteRow = p => {
+    const soon = p.status === "soon", tag = soon ? "div" : `a href="#note-${p.slug}"`, end = soon ? "div" : "a";
+    const status = soon ? `<span class="mut">${tx("soon")}</span>` : `<span class="draft">${tx("draft")}</span>`;
+    const ser = p.series ? `<span class="mut">${L(SERIES[p.series])} ${p.part}/${POSTS.filter(x => x.series === p.series).length}</span>` : "";
+    return `<${tag} class="note${soon ? " soon" : ""}"><span><span class="t">${L(p.t)}</span><p>${L(p.sum)}</p>
+      <span class="tags-row">${p.themes.map(k => `<em>${L(THEMES[k])}</em>`).join("")}<em class="pj">${projName(p.project)}</em></span></span>
+      <span class="meta mono">${status}<span class="mut">${p.min} ${tx("min")}</span>${ser}</span></${end}>`;
+  };
+  const F = {by:"theme", key:"all", sort:"feat"};
+  function filtered(){
+    let list = POSTS.filter(p => F.key === "all" || (F.by === "theme" ? p.themes.includes(F.key) : p.project === F.key));
+    const rank = p => (p.featured ? 0 : 1) + (p.status === "soon" ? 2 : 0);
+    list = list.slice().sort(F.sort === "short" ? (a, b) => a.min - b.min : (a, b) => rank(a) - rank(b));
+    return list;
+  }
+  function buildFilters(){
+    const keys = F.by === "theme" ? Object.keys(THEMES).filter(k => POSTS.some(p => p.themes.includes(k)))
+                                  : P.map(p => p.id).filter(id => POSTS.some(p => p.project === id));
+    const count = k => POSTS.filter(p => F.by === "theme" ? p.themes.includes(k) : p.project === k).length;
+    const label = k => F.by === "theme" ? L(THEMES[k]) : projName(k);
+    $("fchips").innerHTML = `<button type="button" class="fchip" data-k="all" aria-pressed="${F.key === "all"}">${tx("all")} <span>${POSTS.length}</span></button>` +
+      keys.map(k => `<button type="button" class="fchip" data-k="${k}" aria-pressed="${F.key === k}">${label(k)} <span>${count(k)}</span></button>`).join("");
+    document.querySelectorAll(".seg button").forEach(b => { b.textContent = tx(b.dataset.by === "theme" ? "by_theme" : "by_project"); b.setAttribute("aria-pressed", String(b.dataset.by === F.by)); });
+    document.querySelectorAll(".sortb").forEach(b => { b.textContent = tx(b.dataset.sort === "feat" ? "s_feat" : "s_short"); b.setAttribute("aria-pressed", String(b.dataset.sort === F.sort)); });
+    $("sort-l").textContent = tx("sort");
+  }
+  function buildNotes(){
+    $("home-notes").innerHTML = `<div class="notes" style="margin-bottom:0">${POSTS.filter(p => p.featured).map(noteRow).join("")}</div>`;
+    $("all-count").textContent = POSTS.length;
+    buildFilters();
+    const list = filtered();
+    $("ncount").textContent = tx("n_notes")(list.length);
+    $("blog-notes").innerHTML = list.length ? list.map(noteRow).join("") : `<p class="mut" style="padding:22px 0">${tx("empty")}</p>`;
+  }
+  document.addEventListener("click", e => {
+    const seg = e.target.closest(".seg button"); if (seg) { F.by = seg.dataset.by; F.key = "all"; buildNotes(); return; }
+    const fc = e.target.closest(".fchip"); if (fc) { F.key = fc.dataset.k; buildNotes(); return; }
+    const sb = e.target.closest(".sortb"); if (sb) { F.sort = sb.dataset.sort; buildNotes(); }
+  });
+  function renderPost(slug){
+    const readable = POSTS.filter(p => p.status !== "soon");
+    const i = readable.findIndex(p => p.slug === slug); if (i < 0) return false;
+    const p = readable[i], nx = readable[(i + 1) % readable.length];
+    const parts = p.series ? POSTS.filter(x => x.series === p.series).sort((a, b) => a.part - b.part) : [];
+    const seriesBox = parts.length ? `<div class="series"><span class="mono lab">${tx("series")} · ${L(SERIES[p.series])}</span><ol>${parts.map(x => `<li${x.slug === p.slug ? ' class="here"' : ""}><span class="mono mut">${tx("part")} ${x.part}</span>${x.status === "soon" || x.slug === p.slug ? `<b>${L(x.t)}</b>` : `<a href="#note-${x.slug}">${L(x.t)}</a>`}${x.status === "soon" ? `<span class="mono mut">${tx("soon")}</span>` : ""}</li>`).join("")}</ol></div>` : "";
+    $("post").innerHTML = `<a class="back mono ul" href="#blog">${tx("back")}</a>
+      <div class="mono lab">${p.themes.map(k => L(THEMES[k])).join(" · ")} · ${projName(p.project)}</div><h1>${L(p.t)}</h1>
+      <div class="meta mono"><span class="draft">${tx("draft")}</span><span class="mut">Jacob Kondjo · ${p.min} ${tx("min")}</span></div>
+      ${seriesBox}
+      ${L(p.body).map((par, k) => par.startsWith("|") ? `<p class="pull">${par.slice(1)}</p>` : `<p${k ? "" : ' class="lede"'}>${par}</p>`).join("")}
+      <div class="next"><span class="mono mut">${tx("next")}</span><a href="#note-${nx.slug}">${L(nx.t)} →</a></div>`;
+    return true;
+  }
+
+  /* ---------------- Vues ---------------- */
+  const HOME = ["top","network","work","proof","writing","contact"];
+  function route(){
+    const h = location.hash.slice(1);
+    let view = "home";
+    if (h === "blog") view = "blog";
+    else if (h.startsWith("note-") && renderPost(h.slice(5))) view = "post";
+    $("v-home").hidden = view !== "home"; $("v-blog").hidden = view !== "blog"; $("v-post").hidden = view !== "post";
+    $("nav-blog").toggleAttribute("aria-current", view !== "home");
+    if (view !== "home") { window.scrollTo(0, 0); dockLinks.forEach(a => a.setAttribute("aria-current", String(a.dataset.s === "blog"))); }
+    else if (HOME.includes(h)) { setTimeout(() => { $(h).scrollIntoView(); mlines(); }, 60); }
+    else { mlines(); }
+  }
+  const dockLinks = [...document.querySelectorAll(".dock a")];
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting && !$("v-home").hidden) dockLinks.forEach(a => a.setAttribute("aria-current", String(a.dataset.s === (en.target.id === "writing" ? "blog" : en.target.id)))); }), {rootMargin:"-45% 0px -50% 0px"});
+  ["network","work","proof","writing","contact"].forEach(id => io.observe($(id)));
+  addEventListener("hashchange", route);
+
+  /* ---------------- Langue ---------------- */
+  function setLang(l, save){
+    lang = l; document.documentElement.lang = l;
+    document.querySelectorAll("[data-t]").forEach(el => { const v = T[l][el.dataset.t]; if (typeof v === "string") el.innerHTML = v; });
+    document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+    document.title = "Jacob Kondjo · AI Engineer";
+    buildChips(); buildDims(); buildWorks(); buildNotes(); draw(true);
+    if (current) select(current, manualUntil > Date.now(), true);
+    if (location.hash.startsWith("#note-")) renderPost(location.hash.slice(6));
+    if (save) { try { localStorage.setItem("lang", l); } catch (e) {} }
+  }
+  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang, true)));
+  let saved = null; try { saved = localStorage.getItem("lang"); } catch (e) {}
+  const browserFr = (navigator.languages || [navigator.language || ""]).some(x => /^fr\b/i.test(x));
+  setLang(saved === "fr" || saved === "en" ? saved : (browserFr ? "fr" : "en"), false);
+  new ResizeObserver(() => draw(false)).observe(svg.parentNode);
+  select("galileo", false, true);
+  route();
+
+  /* ---------------- Espace latent (ouverture) ---------------- */
+  const ANCH = [[.12,.3],[.5,.14],[.88,.3],[.86,.78],[.5,.9],[.14,.76]];
+  const CONCEPTS = [
+    ["PyTorch",[1,0,0,.1,0,.2]],["TensorFlow",[1,0,0,.1,0,.2]],["Transformer",[1,.2,.2,0,0,0]],["Attention",[1,.1,.3,0,0,0]],
+    [{en:"Backprop", fr:"Rétropropagation"},[1,0,0,0,0,.1]],["Fine-tuning",[.9,.1,0,0,.3,.3]],["CNN",[1,0,0,0,0,.1]],["YOLOv8",[.9,0,0,.1,.1,.1]],
+    ["GPT-2",[1,.2,0,0,0,0]],["Embeddings",[.6,0,.9,0,0,.2]],
+    ["Agents",[.1,1,.2,0,.1,0]],["LangGraph",[0,1,.2,.1,0,0]],["MCP",[0,1,0,.3,0,0]],["LiveKit",[0,.9,0,.4,0,0]],
+    ["Twilio",[0,.7,0,.5,0,0]],["Function calling",[.1,.9,.1,.1,0,0]],["Claude",[.3,.8,.2,0,0,0]],["Gemini",[.4,.7,.3,0,0,0]],
+    ["RAG",[.1,.5,1,0,.2,0]],["pgvector",[0,0,1,.3,0,.3]],["RRF",[0,0,1,0,.2,0]],["Reranking",[.3,0,1,0,.2,0]],
+    [{en:"Hybrid search", fr:"Recherche hybride"},[0,0,1,.1,.1,.1]],["BM25",[0,0,1,0,0,.1]],
+    ["Langfuse",[0,.4,.1,.2,1,0]],["LLM-as-a-judge",[.2,.4,.2,0,1,0]],["MRR",[0,0,.6,0,1,0]],["Recall@5",[0,0,.6,0,1,0]],["BLEU",[.4,0,0,0,1,0]],
+    ["Terraform",[0,0,0,1,0,0]],["Cloud Tasks",[0,.1,0,1,0,0]],["Docker",[0,0,0,1,0,.1]],["Cloud Run",[0,.1,0,1,0,0]],
+    ["Azure",[0,0,0,1,0,.1]],["CI/CD",[0,0,0,1,.2,0]],["FastAPI",[0,.3,0,.8,0,0]],
+    ["BigQuery",[0,0,.1,.3,0,1]],["Airflow",[0,0,0,.4,0,1]],["dbt",[0,0,0,.2,0,1]],["Vertex AI",[.5,.1,.3,.6,.1,.5]]
+  ];
+  const frac = x => x - Math.floor(x);
+  const hero = $("space"), cv = $("field"), g = cv.getContext("2d");
+  let W = 0, H = 0, nodes = [];
+  const ptr = {x:0, y:0, on:false, last:0};
+  function build(){
+    const r = hero.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+    W = r.width; H = r.height; if (!W || !H) return;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    nodes = CONCEPTS.map(([name, v], i) => {
+      const s = v.reduce((a, b) => a + b, 0); let x = 0, y = 0;
+      v.forEach((w, k) => { x += w * ANCH[k][0]; y += w * ANCH[k][1]; });
+      x = x / s + (frac(Math.sin(i * 12.9898) * 43758.5453) - .5) * .16;
+      y = y / s + (frac(Math.sin(i * 78.233) * 12543.123) - .5) * .16;
+      return {name, v, x:Math.min(.97, Math.max(.03, x)) * W, y:Math.min(.96, Math.max(.04, y)) * H, j:i};
+    });
+  }
+  new ResizeObserver(build).observe(hero);
+  const move = e => { const r = hero.getBoundingClientRect(); ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.on = true; ptr.last = Date.now(); };
+  hero.addEventListener("pointermove", move, {passive:true});
+  hero.addEventListener("pointerdown", move, {passive:true});
+  hero.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") ptr.on = false; });
+  let qx = 0, qy = 0;
+  function frame(t){
+    if (!$("v-home").hidden && W && H) {
+      if (ptr.on && Date.now() - ptr.last > 4000) ptr.on = false;
+      const auto = !ptr.on;
+      const tx2 = auto ? W * (.64 + .28 * Math.sin(t * .00016)) : ptr.x;
+      const ty2 = auto ? H * (.5 + .34 * Math.sin(t * .00023 + 1.3)) : ptr.y;
+      if (!qx && !qy) { qx = tx2; qy = ty2; }
+      qx += (tx2 - qx) * (auto ? .03 : .2); qy += (ty2 - qy) * (auto ? .03 : .2);
+      g.clearRect(0, 0, W, H);
+      const sigma = .32 * Math.max(W, H);
+      const q = ANCH.map(([ax, ay]) => Math.exp(-((Math.hypot(qx - ax * W, qy - ay * H) / sigma) ** 2)));
+      const top = nodes.map(n => ({n, c:cos(q, n.v)})).sort((a, b) => b.c - a.c).slice(0, 4);
+      const small = W < 700, fade = small ? (ptr.on ? .85 : .5) : 1;
+      g.fillStyle = C.ink;
+      for (const n of nodes) {
+        n.dx = n.x + (reduce ? 0 : Math.sin(t * .0004 + n.j) * 2); n.dy = n.y + (reduce ? 0 : Math.cos(t * .00035 + n.j) * 2);
+        g.globalAlpha = .24; g.beginPath(); g.arc(n.dx, n.dy, 2, 0, Math.PI * 2); g.fill();
+      }
+      g.strokeStyle = C.accent; g.fillStyle = C.accent; g.lineWidth = 1;
+      top.forEach(({n}, i) => {
+        g.globalAlpha = (.55 - i * .1) * fade; g.beginPath(); g.moveTo(qx, qy); g.lineTo(n.dx, n.dy); g.stroke();
+        g.globalAlpha = fade; g.beginPath(); g.arc(n.dx, n.dy, 3.2 - i * .4, 0, Math.PI * 2); g.fill();
+      });
+      g.globalAlpha = fade;
+      g.beginPath(); g.arc(qx, qy, 8, 0, Math.PI * 2); g.stroke();
+      g.beginPath(); g.moveTo(qx - 13, qy); g.lineTo(qx - 4, qy); g.moveTo(qx + 4, qy); g.lineTo(qx + 13, qy); g.moveTo(qx, qy - 13); g.lineTo(qx, qy - 4); g.moveTo(qx, qy + 4); g.lineTo(qx, qy + 13); g.stroke();
+      const b = top[0];
+      if (b && (!small || ptr.on)) {
+        const label = L(b.n.name) + "  cos " + b.c.toFixed(3);
+        g.font = "11px 'IBM Plex Mono', monospace"; const lw = g.measureText(label).width;
+        const lx = Math.min(b.n.dx + 8, W - lw - 12), ly = b.n.dy - 10;
+        g.globalAlpha = .9; g.fillStyle = C.paper; g.fillRect(lx - 4, ly - 12, lw + 8, 17);
+        g.globalAlpha = 1; g.fillStyle = C.accent; g.fillText(label, lx, ly);
+      }
+      g.globalAlpha = 1;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+</script>
+
+</body>
+</html>

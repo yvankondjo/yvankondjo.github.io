@@ -1,0 +1,6 @@
+/* Violet (indigo), the only site colour */
+:root[data-palette="indigo"]{--accent:#4f2a8c;--tint:#f2eef8;--on-accent:#ffffff}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"])[data-palette="indigo"]{--accent:#b9a0f2;--tint:#1a1528;--on-accent:#0c0c0c}
+}
+:root[data-theme="dark"][data-palette="indigo"]{--accent:#b9a0f2;--tint:#1a1528;--on-accent:#0c0c0c}
