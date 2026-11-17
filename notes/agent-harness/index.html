@@ -13,8 +13,8 @@
 <meta property="og:url" content="https://yvankondjo.github.io/notes/agent-harness/">
 <meta property="og:image" content="https://yvankondjo.github.io/notes/agent-harness/img/og.jpg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="675">
-<meta property="og:image:alt" content="AI Agent = Model + Harness: user, interface, harness, model and tools.">
+<meta property="og:image:height" content="628">
+<meta property="og:image:alt" content="AI Agent = Model + Harness: what a harness is, and GLM-5.3 Flash going from 24% to 59% across five harnesses.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f2a8c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' fill='white' text-anchor='middle'%3EJK%3C/text%3E%3C/svg%3E">
 <script>
@@ -162,6 +162,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer a{border:0}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 
+/* image d'ouverture */
+figure.pic.hero{margin:0 0 34px;padding:0;border:0}
+figure.pic.hero img{border:1px solid var(--rule)}
 /* langue */
 html[data-lang="fr"] .L[lang="en"],html:not([data-lang="fr"]) .L[lang="fr"]{display:none}
 .bar .right{display:flex;align-items:center;gap:14px}
@@ -190,6 +193,7 @@ html[data-lang="fr"] .L[lang="en"],html:not([data-lang="fr"]) .L[lang="fr"]{disp
   </header>
 
   <article>
+    <figure class="pic hero"><img src="img/infographic.jpg" alt="AI Agent = Model + Harness. Left: the user talks to the model, which works inside a harness made of tools, orchestration, context and memory, in a loop: plan, use tools, observe, repeat. Right: GLM-5.3 Flash success rate in five harnesses, from 24% in Codex to 59% in DeepSeek Harness, a 35-point gap." width="1671" height="941" decoding="async"></figure>
     <div class="tldr">
       <span class="mono">In three lines</span>
       <ol>
@@ -341,11 +345,12 @@ get_tuition_fees(program_id, campus)</pre>
   <header class="art-head">
     <p class="mono kicker">Agents · Harness engineering</p>
     <h1>Agent = modèle <i>+ harness</i></h1>
-    <p class="sub">Le modèle ne travaille jamais seul. Pourquoi le même LLM passe de 24 % à 59 % selon l'endroit où on le fait travailler.</p>
+    <p class="sub">Le modèle ne travaille jamais seul. Pourquoi le même LLM passe de 24&nbsp;% à 59&nbsp;% selon l'endroit où on le fait travailler.</p>
     <div class="meta mono mut"><span>Jacob Kondjo</span><span>Novembre 2026</span><span>12 min</span></div>
   </header>
 
   <article>
+    <figure class="pic hero"><img src="img/infographic.jpg" alt="Agent IA = modèle + harness. À gauche : l'utilisateur parle au modèle, qui travaille dans un harness fait d'outils, d'orchestration, de contexte et de mémoire, en boucle : planifier, utiliser les outils, observer, recommencer. À droite : taux de réussite de GLM-5.3 Flash dans cinq harnesses, de 24&nbsp;% dans Codex à 59&nbsp;% dans DeepSeek Harness, soit 35 points d'écart." width="1671" height="941" decoding="async"></figure>
     <div class="tldr">
       <span class="mono">En trois lignes</span>
       <ol>
@@ -356,7 +361,7 @@ get_tuition_fees(program_id, campus)</pre>
     </div>
 
     <p class="lede">Il y a quelques semaines, un chiffre m'a fait relire tous les classements de modèles autrement.</p>
-    <p>GLM-5.3 Flash résout 24 % des tâches de code dans Codex. Le même modèle, sur les mêmes 113 tâches, en résout 59 % dans DeepSeek Harness.</p>
+    <p>GLM-5.3 Flash résout 24&nbsp;% des tâches de code dans Codex. Le même modèle, sur les mêmes 113 tâches, en résout 59&nbsp;% dans DeepSeek Harness.</p>
     <p class="short">Mêmes poids. Mêmes tâches. 35 points d'écart.</p>
     <p>Si le modèle n'a pas changé, quelque chose d'autre a changé. Ce texte cherche quoi, pourquoi l'effet est si fort, et ce que ça change concrètement quand on choisit ou qu'on construit un agent.</p>
     <p class="pull">On compare des cerveaux. On oublie de regarder les mains.</p>
@@ -399,14 +404,14 @@ get_tuition_fees(program_id, campus)</pre>
 
     <figure class="pic"><img src="img/fr/glm.svg" alt="Benchmark GLM-5.3 Flash dans Codex, Claude Code, OpenCode, Pi et DeepSeek Harness." loading="lazy" decoding="async"><figcaption>Source : <a href="https://www.8090.ai/blog/same-model-different-harness">8090 Labs, Same Model, Different Harness</a>, 9 octobre 2026.</figcaption></figure>
 
-    <p>Regardez la forme, pas seulement l'écart. Ce n'est pas une pente douce. Il y a <strong>deux groupes</strong> : trois harnesses autour de 25 %, deux autour de 58 %. Le modèle ne devient pas un peu meilleur. Il devient un autre agent.</p>
+    <p>Regardez la forme, pas seulement l'écart. Ce n'est pas une pente douce. Il y a <strong>deux groupes</strong> : trois harnesses autour de 25&nbsp;%, deux autour de 58&nbsp;%. Le modèle ne devient pas un peu meilleur. Il devient un autre agent.</p>
     <p>Mais l'effet dépend du modèle. Dans la même étude, GPT-5.6 Sol ne bouge que de six points d'un harness à l'autre. Le harness n'est donc pas un bonus fixe qu'on ajoute à n'importe quel modèle : c'est une <em>interaction</em>. Certains modèles y sont très sensibles, d'autres presque pas.</p>
     <p class="methode"><b>Méthode</b> 7 modèles × 5 harnesses, 113 tâches, 2 exécutions par combinaison. Deux exécutions, c'est peu : ne lisez rien dans 24 contre 27. Trente-cinq points, en revanche, ne s'expliquent pas par le hasard.</p>
 
     <p>Second exemple, sur un tout autre terrain. ARC Prize a évalué GPT-6 Astra sur ARC-AGI-3, des jeux de raisonnement interactifs, avec le même niveau de raisonnement (<em>high</em>) dans les deux cas.</p>
 
-    <figure class="pic"><img src="img/fr/astra.svg" alt="GPT-6 Astra sur ARC-AGI-3 Semi-Private : harness standard à 54,8 % contre Provider Adapter à 99,9 %." loading="lazy" decoding="async"><figcaption>Source : <a href="https://arcprize.org/blog/astra">ARC Prize</a>, septembre 2026.</figcaption></figure>
-    <p>Presque le double. Et, détail qui compte, l'évaluation a coûté <strong>moins cher</strong> : 18 817 $ au lieu de 40 705 $, soit 54 % d'économie. Meilleur et moins cher à la fois, avec le même modèle.</p>
+    <figure class="pic"><img src="img/fr/astra.svg" alt="GPT-6 Astra sur ARC-AGI-3 Semi-Private : harness standard à 54,8&nbsp;% contre Provider Adapter à 99,9&nbsp;%." loading="lazy" decoding="async"><figcaption>Source : <a href="https://arcprize.org/blog/astra">ARC Prize</a>, septembre 2026.</figcaption></figure>
+    <p>Presque le double. Et, détail qui compte, l'évaluation a coûté <strong>moins cher</strong> : 18 817 $ au lieu de 40 705 $, soit 54&nbsp;% d'économie. Meilleur et moins cher à la fois, avec le même modèle.</p>
 
     <h2 id="fr-pourquoi"><span class="n">03</span>Pourquoi ça varie <i>autant ?</i></h2>
     <p>Trois leviers expliquent l'essentiel. Chacun a sa preuve chiffrée.</p>
@@ -418,14 +423,14 @@ get_tuition_fees(program_id, campus)</pre>
 get_tuition_fees(program_id, campus)</pre>
     <p>Le premier ne dit presque rien. Le second dit quoi, et avec quoi. Le modèle relit le nom, la description et les paramètres de chaque outil à chaque décision.</p>
     <p class="pull">Une description d'outil, c'est un prompt. On l'écrit une fois, le modèle la relit mille fois.</p>
-    <figure class="pic"><img src="img/anthropic.png" alt="Benchmark Anthropic des outils Slack : 67,4 % avec un serveur MCP écrit manuellement, 80,1 % avec des outils optimisés." loading="lazy" decoding="async"><figcaption>Source : <a href="https://www.anthropic.com/research/writing-tools-for-agents">Anthropic, Writing effective tools for agents</a>, septembre 2025. Noms, descriptions, interface et retours ont été repensés ensemble.</figcaption></figure>
+    <figure class="pic"><img src="img/anthropic.png" alt="Benchmark Anthropic des outils Slack : 67,4&nbsp;% avec un serveur MCP écrit manuellement, 80,1&nbsp;% avec des outils optimisés." loading="lazy" decoding="async"><figcaption>Source : <a href="https://www.anthropic.com/research/writing-tools-for-agents">Anthropic, Writing effective tools for agents</a>, septembre 2025. Noms, descriptions, interface et retours ont été repensés ensemble.</figcaption></figure>
 
     <h3><span class="mono">B</span>Le contexte : ce que le modèle sait</h3>
     <p>À chaque étape, le harness choisit ce qu'il montre au modèle : les instructions, les fichiers, les réponses des outils, l'historique. Sur une longue tâche, tout ça finit par déborder de la fenêtre de contexte. Il faut alors résumer : c'est la <strong>compaction</strong>.</p>
     <p>Bien faite, elle garde l'essentiel. Mal faite, elle efface justement l'observation qui expliquait une décision. Le modèle refait alors un travail déjà fait, ou perd le fil de sa propre logique.</p>
     <p class="pull">Un agent qui oublie pourquoi il a fait quelque chose va le refaire.</p>
-    <p>C'est exactement ce que fait le Provider Adapter d'Astra : il garde l'état du raisonnement entre deux actions et compresse le contexte quand il devient trop long. OpenAI a observé la même chose avec GPT-5.6 Sol : ces deux réglages font passer le score de 13,3 % à 38,3 % sur le jeu public d'ARC-AGI-3, avec six fois moins de tokens produits.</p>
-    <figure class="pic"><img src="img/fr/sol.svg" alt="Résultats GPT-5.6 Sol sur ARC-AGI-3 : 13,3 % à 38,3 % après conservation du raisonnement et compaction." loading="lazy" decoding="async"><figcaption>Source : <a href="https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/">OpenAI</a>, 29 juillet 2026. Ensemble différent de l'évaluation Astra : ne comparez pas les deux chiffres entre eux.</figcaption></figure>
+    <p>C'est exactement ce que fait le Provider Adapter d'Astra : il garde l'état du raisonnement entre deux actions et compresse le contexte quand il devient trop long. OpenAI a observé la même chose avec GPT-5.6 Sol : ces deux réglages font passer le score de 13,3&nbsp;% à 38,3&nbsp;% sur le jeu public d'ARC-AGI-3, avec six fois moins de tokens produits.</p>
+    <figure class="pic"><img src="img/fr/sol.svg" alt="Résultats GPT-5.6 Sol sur ARC-AGI-3 : 13,3&nbsp;% à 38,3&nbsp;% après conservation du raisonnement et compaction." loading="lazy" decoding="async"><figcaption>Source : <a href="https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/">OpenAI</a>, 29 juillet 2026. Ensemble différent de l'évaluation Astra : ne comparez pas les deux chiffres entre eux.</figcaption></figure>
 
     <h3><span class="mono">C</span>La boucle : comment le modèle agit</h3>
     <p>Enfin, le harness décide quoi faire après une erreur, combien d'étapes autoriser, quand lancer une vérification, quand demander à un humain. Une boucle qui laisse le modèle revenir sur ses erreurs augmente ses chances. Elle augmente aussi le nombre d'actions.</p>
@@ -437,8 +442,8 @@ get_tuition_fees(program_id, campus)</pre>
     <p>Revenons à GLM-5.3 Flash et faisons un calcul simple. Une tentative coûte 0,22 $ dans Codex et 0,25 $ dans Pi. Codex semble moins cher. Mais on ne paie pas pour des tentatives, on paie pour des tâches terminées.</p>
     <figure class="pic"><img src="img/fr/cout.svg" alt="GLM-5.3 Flash : coût d'une tentative et coût par tâche réussie dans Codex et Pi." loading="lazy" decoding="async"><figcaption>Source : <a href="https://www.8090.ai/blog/same-model-different-harness">8090 Labs</a>. Tarifs d'API utilisés dans l'étude.</figcaption></figure>
     <div class="calc">
-      <div class="r"><span>Codex · 0,22 $ ÷ 24 % de réussite</span><span>≈ 0,93 $ par réussite</span></div>
-      <div class="r"><span>Pi · 0,25 $ ÷ 58 % de réussite</span><span><b>≈ 0,43 $ par réussite</b></span></div>
+      <div class="r"><span>Codex · 0,22 $ ÷ 24&nbsp;% de réussite</span><span>≈ 0,93 $ par réussite</span></div>
+      <div class="r"><span>Pi · 0,25 $ ÷ 58&nbsp;% de réussite</span><span><b>≈ 0,43 $ par réussite</b></span></div>
     </div>
     <p class="short">La tentative la moins chère donne la réussite la plus chère.</p>
     <p>En production, un seul chiffre ne suffit jamais. Il en faut quatre, lus ensemble :</p>
@@ -456,7 +461,7 @@ get_tuition_fees(program_id, campus)</pre>
     <p>C'est ce qu'explorent les Harness Adapters publiés sur Hugging Face en novembre 2026 : un même modèle de base, et un petit adaptateur par harness, entraîné par renforcement sur des tâches dont on peut vérifier le résultat.</p>
     <figure class="pic"><img src="img/fr/adaptateurs.svg" alt="Un modèle de base et des adaptateurs spécialisés pour différents harnesses." loading="lazy" decoding="async"></figure>
     <figure class="pic"><img src="img/fr/lfm.svg" alt="Évaluation Hugging Face de LFM2.5-24B-A2B dans OpenCode : taux de réussite avant et après entraînement, et réduction des appels d'outils." loading="lazy" decoding="async"><figcaption>Données : <a href="https://huggingface.co/harness-hub/LFM2.5-24B-A2B-opencode">fiche de l'adaptateur OpenCode</a>. +1,3 point, dans la marge d'incertitude.</figcaption></figure>
-    <p>Soyons honnêtes : le gain de réussite n'est pas démontré. Ce qui est intéressant est ailleurs. Sur les 119 tâches que les deux versions réussissent, l'adaptateur utilise <strong>30 % d'appels d'outils en moins</strong>. Dans Pi, un autre adaptateur du même modèle descend de 39 %, pour une variation de réussite (−4,2 points) elle aussi dans la marge d'incertitude.</p>
+    <p>Soyons honnêtes : le gain de réussite n'est pas démontré. Ce qui est intéressant est ailleurs. Sur les 119 tâches que les deux versions réussissent, l'adaptateur utilise <strong>30&nbsp;% d'appels d'outils en moins</strong>. Dans Pi, un autre adaptateur du même modèle descend de 39&nbsp;%, pour une variation de réussite (−4,2 points) elle aussi dans la marge d'incertitude.</p>
     <p class="pull">Le modèle n'apprend pas à mieux réussir. Il apprend à moins tâtonner.</p>
     <p>Le travail <a href="https://arxiv.org/abs/2607.22688">Co-Harness</a> va plus loin : il fait évoluer les deux à la fois. On analyse les échecs, on modifie le harness, on génère de nouvelles trajectoires, on adapte le modèle, et on recommence. Le modèle et son environnement ne sont plus deux projets séparés, mais un seul système qu'on optimise.</p>
 
@@ -501,7 +506,7 @@ get_tuition_fees(program_id, campus)</pre>
 (() => {
   const META = {
     en: ["Agent = model + harness · Jacob Kondjo", "Why the same LLM goes from 24% to 59% depending on the harness it runs in, and what that changes when you pick or build an agent."],
-    fr: ["Agent = modèle + harness · Jacob Kondjo", "Pourquoi le même LLM passe de 24 % à 59 % selon le harness dans lequel il travaille, et ce que ça change pour choisir ou construire un agent."]
+    fr: ["Agent = modèle + harness · Jacob Kondjo", "Pourquoi le même LLM passe de 24&nbsp;% à 59&nbsp;% selon le harness dans lequel il travaille, et ce que ça change pour choisir ou construire un agent."]
   };
   const desc = document.querySelector('meta[name="description"]');
   function setLang(l, save) {
