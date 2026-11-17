@@ -27,7 +27,7 @@
       swipe:"Slides on its own · swipe →", oss:"Open source ↗", gpt2_name:"GPT-2 from the paper",
       proof_kick:"Proof", proof_h2:"What you can verify.",
       proof3_t:"1st place, Voice AI Hackathon", proof3_s:"OpenAI × AI Collective · Station F · March 2026",
-      writ_kick:"Writing", writ_h2:"Notes from production.", writ_all:"All notes →", writ_h2b:"The ones I would start with.",
+      writ_kick:"Writing", writ_h2:"Notes from production.", writ_all:"All notes →", writ_h2b:"Start with this one.",
       blog_h1:"Notes from <i>production.</i>",
       blog_lead:"Short field notes on training models and shipping agents. What worked, what broke, what I would do again.",
       contact_kick:"Contact", contact_h2:"A model to train, an agent to ship? <i>Let's talk.</i>",
@@ -51,7 +51,7 @@
       swipe:"Défile seul · glissez →", oss:"Open source ↗", gpt2_name:"GPT-2 depuis le papier",
       proof_kick:"Preuves", proof_h2:"Ce qui se vérifie.",
       proof3_t:"1<sup>re</sup> place, Voice AI Hackathon", proof3_s:"OpenAI × AI Collective · Station F · mars 2026",
-      writ_kick:"Écrits", writ_h2:"Notes de production.", writ_all:"Tous les écrits →", writ_h2b:"Celles par lesquelles je commencerais.",
+      writ_kick:"Écrits", writ_h2:"Notes de production.", writ_all:"Tous les écrits →", writ_h2b:"Commencez par celle-ci.",
       blog_h1:"Notes de <i>production.</i>",
       blog_lead:"Des notes de terrain, courtes, sur l'entraînement de modèles et la mise en production d'agents. Ce qui a marché, ce qui a cassé, ce que je referais.",
       contact_kick:"Écrire", contact_h2:"Un modèle à entraîner, un agent à livrer ? <i>Parlons-en.</i>",
@@ -113,77 +113,17 @@
      m:["0 → 1", {en:"from a blank page", fr:"depuis une page blanche"}], up:["pytorch","transf"]}
   ];
   const POSTS = [
-    {slug:"evaluate-agent", min:4, tag:{en:"Agents", fr:"Agents"},
-     t:{en:"Evaluate an agent before it talks to 300,000 people", fr:"Évaluer un agent avant qu'il parle à 300 000 personnes"},
-     sum:{en:"The test set is the spec. Notes from shipping an admissions agent.", fr:"Le jeu de test, c'est la spécification. Notes sur un agent d'admissions."},
-     body:{en:[
-       "An admissions agent doesn't get a second first impression. Three schools, 300,000 visitors a year, and every wrong answer lands on a student deciding where to spend the next five years.",
-       "So evaluation came before launch, not after. I ran experiments in Langfuse on real admissions questions and scored each model with an LLM judge on two things: is the answer right, and did it invent anything.",
-       "The judge is a tool, not an oracle. Its rubric is written down, versioned, and checked against human reading on a sample. When the judge and a human disagree, the rubric changes.",
-       "|Write the questions before the prompts. The test set is the spec.",
-       "Then evaluation keeps running in production. Traces, latency and token cost sit next to answer quality. A model swap that is cheaper but hallucinates more doesn't ship."
-     ], fr:[
-       "Un agent d'admissions n'a pas de seconde chance de faire bonne impression. Trois écoles, 300 000 visiteurs par an, et chaque mauvaise réponse tombe sur un étudiant qui choisit où passer ses cinq prochaines années.",
-       "L'évaluation est donc venue avant le lancement, pas après. J'ai lancé des expériences dans Langfuse sur de vraies questions d'admission, et chaque modèle a été noté par un LLM juge sur deux points : la réponse est-elle juste, et a-t-il inventé quelque chose ?",
-       "Le juge est un outil, pas un oracle. Sa grille est écrite, versionnée, et comparée à une lecture humaine sur un échantillon. Quand le juge et l'humain ne sont pas d'accord, c'est la grille qui change.",
-       "|Écrivez les questions avant les prompts. Le jeu de test, c'est la spécification.",
-       "Ensuite, l'évaluation continue en production. Traces, latence et coût en tokens sont à côté de la qualité des réponses. Un modèle moins cher qui hallucine davantage ne part pas en production."
-     ]}},
-    {slug:"hand-off", min:3, tag:{en:"Agents", fr:"Agents"},
-     t:{en:"Knowing when to hand off", fr:"Savoir passer la main"},
-     sum:{en:"The most useful thing a support agent can say is: let me get you a person.", fr:"La phrase la plus utile d'un agent de support : je vous passe quelqu'un."},
-     body:{en:[
-       "The most useful sentence a support agent can say is: let me get you a person.",
-       "Ansio answers on Instagram, Messenger and WhatsApp from a store's FAQ and catalog. Retrieval is hybrid: pgvector for meaning, full text for exact words like a product reference, fused with RRF. I measured it with MRR and Recall before trusting it.",
-       "But retrieval isn't the product. The handoff is. When the agent isn't confident, it doesn't guess. It passes the conversation to a human, with the context already gathered.",
-       "|An agent that knows its limits earns more trust than one that never says no.",
-       "That's how support time dropped by 80% for the first e-commerce stores using it: not by answering everything, but by answering what it could and routing the rest cleanly."
-     ], fr:[
-       "La phrase la plus utile qu'un agent de support puisse dire : je vous passe quelqu'un.",
-       "Ansio répond sur Instagram, Messenger et WhatsApp à partir de la FAQ et du catalogue d'une boutique. La recherche est hybride : pgvector pour le sens, le plein texte pour les mots exacts comme une référence produit, le tout fusionné avec RRF. Je l'ai mesurée en MRR et Recall avant de lui faire confiance.",
-       "Mais la recherche n'est pas le produit. Le passage de main, si. Quand l'agent n'est pas sûr, il ne devine pas. Il transmet la conversation à une personne, avec le contexte déjà rassemblé.",
-       "|Un agent qui connaît ses limites inspire plus confiance qu'un agent qui ne dit jamais non.",
-       "C'est comme ça que le temps de support a baissé de 80 % pour les premières boutiques qui l'utilisent : pas en répondant à tout, mais en répondant à ce qu'il savait et en orientant proprement le reste."
-     ]}},
-    {slug:"twelve-rags", min:4, tag:{en:"RAG", fr:"RAG"},
-     t:{en:"Twelve RAGs, one question", fr:"Douze RAG et une seule question"},
-     sum:{en:"The most elaborate setup didn't win. What a reproducible benchmark taught me.", fr:"Le montage le plus sophistiqué n'a pas gagné. Ce qu'un banc d'essai reproductible m'a appris."},
-     body:{en:[
-       "Which RAG should you use? Most teams answer with a blog post. I wanted an answer I could rerun.",
-       "RAGBench-12x crosses three choices: simple or agentic orchestration; dense, keyword or hybrid retrieval; with or without a reranker. Twelve configurations, same data, same metrics: NDCG, Recall, MRR, faithfulness, answer relevance.",
-       "The result I didn't expect: the most elaborate setup didn't win. Simple orchestration with dense retrieval and a reranker tied for the best NDCG@10, at 0.852. Agentic hybrid with reranking came close at 0.845, with more latency and more moving parts.",
-       "Keyword-only search ranked worst, yet had the highest faithfulness, at 0.884. Different metrics, different winners.",
-       "|The lesson isn't a configuration. It's a habit: measure on your data, keep the run reproducible, and write down what the benchmark doesn't prove."
-     ], fr:[
-       "Quel RAG utiliser ? La plupart des équipes répondent avec un article de blog. Je voulais une réponse que je pouvais rejouer.",
-       "RAGBench-12x croise trois choix : orchestration simple ou agentique ; recherche dense, par mots-clés ou hybride ; avec ou sans reranker. Douze configurations, mêmes données, mêmes métriques : NDCG, Recall, MRR, fidélité, pertinence des réponses.",
-       "Le résultat que je n'attendais pas : le montage le plus sophistiqué n'a pas gagné. L'orchestration simple avec recherche dense et reranker est à égalité pour le meilleur NDCG@10, à 0,852. L'hybride agentique avec reranking suit de près à 0,845, avec plus de latence et plus de pièces mobiles.",
-       "La recherche par mots-clés seule classe le moins bien, mais a la meilleure fidélité, à 0,884. Autres métriques, autres gagnants.",
-       "|La leçon n'est pas une configuration. C'est une habitude : mesurer sur ses données, garder l'expérience rejouable, et écrire ce que le banc d'essai ne prouve pas."
-     ]}}
+    {slug:"agent-harness", url:"notes/agent-harness/", min:11, themes:["agents","eval"], featured:true, status:"published",
+     date:{en:"Nov 2026", fr:"Nov. 2026"},
+     t:{en:"Agent = model + harness", fr:"Agent = modèle + harness"},
+     sum:{en:"Same model, same tasks, 35 points apart. What a harness is, why it matters, and what to check before shipping an agent.",
+          fr:"Même modèle, mêmes tâches, 35 points d'écart. Ce qu'est un harness, pourquoi il compte, et quoi vérifier avant de mettre un agent en production."}}
   ];
   const THEMES = {
     agents:{en:"Agents", fr:"Agents"}, rag:{en:"Search & RAG", fr:"Recherche et RAG"}, eval:{en:"Evaluation", fr:"Évaluation"},
     deep:{en:"Deep learning", fr:"Deep learning"}, infra:{en:"Infra & MLOps", fr:"Infra et MLOps"}, voice:{en:"Voice", fr:"Voix"}
   };
-  const SERIES = {ship:{en:"Shipping agents", fr:"Mettre des agents en production"}};
-  Object.assign(POSTS[0], {themes:["agents","eval"], project:"galileo", featured:true, series:"ship", part:1, status:"draft"});
-  Object.assign(POSTS[1], {themes:["agents","rag"], project:"ansio", featured:true, series:"ship", part:2, status:"draft"});
-  Object.assign(POSTS[2], {themes:["rag","eval"], project:"ragbench", featured:true, status:"draft"});
-  POSTS.push(
-    {slug:"medvoice-48h", status:"soon", min:5, themes:["agents","voice"], project:"medvoice", series:"ship", part:3,
-     t:{en:"48 hours, one voice agent", fr:"48 heures, un agent vocal"},
-     sum:{en:"What we cut to win a hackathon, and why the cuts mattered more than the features.", fr:"Ce qu'on a coupé pour gagner un hackathon, et pourquoi les coupes ont compté plus que les fonctions."}},
-    {slug:"27-languages", status:"soon", min:7, themes:["rag","deep"], project:"renault",
-     t:{en:"Searching in 27 languages", fr:"Chercher dans 27 langues"},
-     sum:{en:"Hybrid search and fine-tuned translation for 1,000+ technicians. Precision first, then speed.", fr:"Recherche hybride et traduction affinée pour plus de 1 000 techniciens. La précision d'abord, la vitesse ensuite."}},
-    {slug:"gpt2-attention", status:"soon", min:10, themes:["deep"], project:"gpt2",
-     t:{en:"Rewriting GPT-2 to understand attention", fr:"Réécrire GPT-2 pour comprendre l'attention"},
-     sum:{en:"Causal masks, Flash Attention, and what the paper leaves out.", fr:"Masques causaux, Flash Attention, et ce que le papier ne dit pas."}},
-    {slug:"served-model", status:"soon", min:6, themes:["infra"], project:"vertexops",
-     t:{en:"A model only exists once it's served", fr:"Un modèle n'existe que lorsqu'il est servi"},
-     sum:{en:"From Airflow to a Vertex AI endpoint, and the steps most teams skip.", fr:"D'Airflow à un endpoint Vertex AI, et les étapes que la plupart des équipes sautent."}}
-  );
+  const SERIES = {};
   let lang = "en";
   const L = v => (v && typeof v === "object" && !Array.isArray(v)) ? (v[lang] ?? v.en) : v;
   const tx = k => T[lang][k];
@@ -339,11 +279,11 @@
   /* ---------------- Écrits ---------------- */
   const projName = id => { const p = P.find(x => x.id === id); return p ? L(p.s) : ""; };
   const noteRow = p => {
-    const soon = p.status === "soon", tag = soon ? "div" : `a href="#note-${p.slug}"`, end = soon ? "div" : "a";
-    const status = soon ? `<span class="mut">${tx("soon")}</span>` : `<span class="draft">${tx("draft")}</span>`;
+    const soon = p.status === "soon", tag = soon ? "div" : `a href="${p.url || "#note-" + p.slug}"`, end = soon ? "div" : "a";
+    const status = soon ? `<span class="mut">${tx("soon")}</span>` : p.status === "draft" ? `<span class="draft">${tx("draft")}</span>` : `<span class="mut">${L(p.date)}</span>`;
     const ser = p.series ? `<span class="mut">${L(SERIES[p.series])} ${p.part}/${POSTS.filter(x => x.series === p.series).length}</span>` : "";
     return `<${tag} class="note${soon ? " soon" : ""}"><span><span class="t">${L(p.t)}</span><p>${L(p.sum)}</p>
-      <span class="tags-row">${p.themes.map(k => `<em>${L(THEMES[k])}</em>`).join("")}<em class="pj">${projName(p.project)}</em></span></span>
+      <span class="tags-row">${p.themes.map(k => `<em>${L(THEMES[k])}</em>`).join("")}${p.project ? `<em class="pj">${projName(p.project)}</em>` : ""}</span></span>
       <span class="meta mono">${status}<span class="mut">${p.min} ${tx("min")}</span>${ser}</span></${end}>`;
   };
   const F = {by:"theme", key:"all", sort:"feat"};
@@ -368,6 +308,7 @@
     $("home-notes").innerHTML = `<div class="notes" style="margin-bottom:0">${POSTS.filter(p => p.featured).map(noteRow).join("")}</div>`;
     $("all-count").textContent = POSTS.length;
     buildFilters();
+    document.querySelector(".filters").hidden = POSTS.length < 3;
     const list = filtered();
     $("ncount").textContent = tx("n_notes")(list.length);
     $("blog-notes").innerHTML = list.length ? list.map(noteRow).join("") : `<p class="mut" style="padding:22px 0">${tx("empty")}</p>`;
@@ -378,7 +319,7 @@
     const sb = e.target.closest(".sortb"); if (sb) { F.sort = sb.dataset.sort; buildNotes(); }
   });
   function renderPost(slug){
-    const readable = POSTS.filter(p => p.status !== "soon");
+    const readable = POSTS.filter(p => p.status !== "soon" && !p.url);
     const i = readable.findIndex(p => p.slug === slug); if (i < 0) return false;
     const p = readable[i], nx = readable[(i + 1) % readable.length];
     const parts = p.series ? POSTS.filter(x => x.series === p.series).sort((a, b) => a.part - b.part) : [];
